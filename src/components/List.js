@@ -11,7 +11,7 @@ const printItem = (items, itemId) => (
     <div>
       <Item itemId={itemId} title={items[itemId].title} parentId={items[itemId].parentId}/>
     </div>
-    <div>
+    <div className={items[itemId].isClosed ? 'childrenLayer closed' : 'childrenLayer opened'}>
       <ul>
         { items[itemId].children.length > 0 && items[itemId].children.map((childId) => (
           printItem(items, childId)

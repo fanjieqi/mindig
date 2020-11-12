@@ -1,11 +1,14 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {addItem, saveItem} from '../actions/index';
+import {addItem, saveItem, closeItem, openItem} from '../actions/index';
+import { FaPlus, FaMinus } from 'react-icons/fa';
 
 function mapDispatchToProps(dispatch) {
   return {
     addItem: (item) => dispatch(addItem(item)),
     saveItem: (item) => dispatch(saveItem(item)),
+    closeItem: (item) => dispatch(closeItem(item)),
+    openItem: (item) => dispatch(openItem(item)),
   };
 }
 
@@ -16,13 +19,25 @@ class ConnectedItem extends Component {
       title: props.title,
       itemId: props.itemId,
       parentId: props.parentId,
+      isClosed: props.isClosed,
       isSaved: false,
       keysPress: {},
     };
+    this.handleClick = this.handleClick.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleKeyPress = this.handleKeyPress.bind(this);
     this.handleKeyDown = this.handleKeyDown.bind(this);
     this.handleBlur = this.handleBlur.bind(this);
+  }
+
+  handleClick(event) {
+    let {itemId, isClosed} = this.state
+    this.setState({isClosed: !isClosed})
+    if (!isClosed) {
+      this.props.closeItem({itemId: itemId})
+    } else {
+      this.props.openItem({itemId: itemId})
+    }
   }
 
   handleChange(event) {
@@ -46,6 +61,8 @@ class ConnectedItem extends Component {
     if (event.key === 'Tab') {
       event.preventDefault();
       const {itemId} = this.state;
+      this.setState({isClosed: false})
+      this.props.openItem({itemId: itemId})
       this.props.addItem({parentId: itemId});
     }
   }
@@ -58,17 +75,19 @@ class ConnectedItem extends Component {
   }
 
   render() {
-    const {title} = this.state;
+    const {title, isClosed} = this.state;
     return (
-      <input
-        type="text"
-        className='item'
-        value={title}
-        onChange={this.handleChange}
-        onKeyPress={this.handleKeyPress}
-        onKeyDown={this.handleKeyDown}
-        onBlur={this.handleBlur}
-      />
+      <div className='item'>
+        {isClosed ? <FaPlus className='iconPlus' onClick={this.handleClick}/> : <FaMinus className='iconMinus' onClick={this.handleClick}/> }
+        <input
+          type='text'
+          value={title}
+          onChange={this.handleChange}
+          onKeyPress={this.handleKeyPress}
+          onKeyDown={this.handleKeyDown}
+          onBlur={this.handleBlur}
+        />
+      </div>
     );
   }
 }

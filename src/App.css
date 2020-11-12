@@ -2,8 +2,16 @@ li.layer {
   display: flex;
 }
 
-input.item {
+.item {
   position: relative;
   top: 50%;
   transform: translateY(-50%);
+}
+
+.iconPlus, .iconMinus {
+  vertical-align: middle;
+}
+
+.childrenLayer.closed {
+  display: none;
 }
