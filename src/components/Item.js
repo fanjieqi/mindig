@@ -62,6 +62,7 @@ class ConnectedItem extends Component {
     return (
       <input
         type="text"
+        className='item'
         value={title}
         onChange={this.handleChange}
         onKeyPress={this.handleKeyPress}
