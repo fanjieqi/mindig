@@ -49,7 +49,7 @@ class ConnectedItem extends Component {
       event.preventDefault();
       const {itemId, title, isSaved, parentId} = this.state;
       if (isSaved) {
-        this.props.addItem({parentId: parentId})
+        this.props.addItem({parentId: parentId, afterId: itemId})
       } else {
         this.setState({isSaved: true})
         this.props.saveItem({title: title, itemId: itemId});

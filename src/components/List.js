@@ -7,7 +7,7 @@ const mapStateToProps = (state) => {
 };
 
 const printItem = (items, itemId) => (
-  <li className='layer'>
+  <li className='layer' key={itemId}>
     <div>
       <Item itemId={itemId} title={items[itemId].title} parentId={items[itemId].parentId}/>
     </div>
