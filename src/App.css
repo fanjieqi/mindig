@@ -19,3 +19,7 @@ li.layer {
 :focus {
   outline: none;
 }
+
+.visibleHidden {
+  visibility: hidden;
+}

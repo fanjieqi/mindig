@@ -17,7 +17,7 @@ function mapDispatchToProps(dispatch) {
 const printItem = (items, itemId) => (
   <li className='layer' key={itemId}>
     <div>
-      <Item itemId={itemId} title={items[itemId].title} parentId={items[itemId].parentId}/>
+      <Item itemId={itemId} title={items[itemId].title} parentId={items[itemId].parentId} showMinus={items[itemId].showMinus}/>
     </div>
     <div className={items[itemId].isClosed ? 'childrenLayer closed' : 'childrenLayer opened'}>
       <ul>

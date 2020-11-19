@@ -20,6 +20,7 @@ class ConnectedItem extends Component {
       itemId: props.itemId,
       parentId: props.parentId,
       isClosed: props.isClosed,
+      showMinus: props.showMinus,
       isSaved: false,
       keysPress: {},
     };
@@ -61,7 +62,7 @@ class ConnectedItem extends Component {
     if (event.key === 'Tab') {
       event.preventDefault();
       const {itemId} = this.state;
-      this.setState({isClosed: false})
+      this.setState({isClosed: false, showMinus: true})
       this.props.openItem({itemId: itemId})
       this.props.addItem({parentId: itemId});
     }
@@ -75,10 +76,10 @@ class ConnectedItem extends Component {
   }
 
   render() {
-    const {title, isClosed} = this.state;
+    const { title, isClosed, showMinus } = this.state;
     return (
       <div className='item'>
-        {isClosed ? <FaPlus className='iconPlus' onClick={this.handleClick}/> : <FaMinus className='iconMinus' onClick={this.handleClick}/> }
+        { isClosed ? <FaPlus className='iconPlus' onClick={this.handleClick}/> : <FaMinus className={ showMinus ? 'iconMinus' : 'iconMinus visibleHidden' } onClick={this.handleClick}/> }
         <input
           type='text'
           value={title}
