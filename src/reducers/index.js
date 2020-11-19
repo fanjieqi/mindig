@@ -1,4 +1,5 @@
-import { ADD_ITEM, SAVE_ITEM, CLOSE_ITEM, OPEN_ITEM, SAVE_ITEMS } from '../constants/action-types';
+import { ADD_ITEM, SAVE_ITEM, CLOSE_ITEM, OPEN_ITEM, SAVE_ITEMS, DELETE_ITEM } from '../constants/action-types';
+var _ = require('lodash');
 
 const initialState = {
   items: {0: {title: 'Root', itemId: 0, parentId: null, children: [], isClosed: false}},
@@ -58,6 +59,17 @@ function saveItems(state, payload) {
   });
 }
 
+function deleteItem(state, payload) {
+  console.log('deleteItem')
+  let items = Object.assign({}, state.items)
+  let {itemId} = payload
+  let item = items[itemId]
+  _.remove(items[item.parentId].children, child => child === itemId)
+  return Object.assign({}, state, {
+    items: items
+  });
+}
+
 function rootReducer(state = initialState, action) {
   if (action.type === ADD_ITEM) {
     return addItem(state, action.payload)
@@ -67,8 +79,10 @@ function rootReducer(state = initialState, action) {
     return closeItem(state, action.payload)
   } else if (action.type === OPEN_ITEM) {
     return openItem(state, action.payload)
-  } else if (action.type == SAVE_ITEMS) {
+  } else if (action.type === SAVE_ITEMS) {
     return saveItems(state, action.payload)
+  } else if (action.type === DELETE_ITEM) {
+    return deleteItem(state, action.payload)
   }
 
   return state;

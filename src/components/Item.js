@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {addItem, saveItem, closeItem, openItem} from '../actions/index';
+import {addItem, saveItem, closeItem, openItem, deleteItem} from '../actions/index';
 import { FaPlus, FaMinus } from 'react-icons/fa';
 
 function mapDispatchToProps(dispatch) {
@@ -9,6 +9,7 @@ function mapDispatchToProps(dispatch) {
     saveItem: (item) => dispatch(saveItem(item)),
     closeItem: (item) => dispatch(closeItem(item)),
     openItem: (item) => dispatch(openItem(item)),
+    deleteItem: (item) => dispatch(deleteItem(item)),
   };
 }
 
@@ -65,6 +66,11 @@ class ConnectedItem extends Component {
       this.setState({isClosed: false, showMinus: true})
       this.props.openItem({itemId: itemId})
       this.props.addItem({parentId: itemId});
+    } else if (event.key == 'Backspace') {
+      if (event.target.value === '') {
+        const {itemId} = this.state;
+        this.props.deleteItem({itemId: itemId})
+      }
     }
   }
 
