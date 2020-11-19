@@ -23,3 +23,11 @@ li.layer {
 .visibleHidden {
   visibility: hidden;
 }
+
+ul li.layer:first-child {
+  margin-top: 1rem;
+}
+
+ul li.layer:last-child {
+  margin-bottom: 1rem;
+}
