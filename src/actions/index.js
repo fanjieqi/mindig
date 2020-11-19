@@ -1,4 +1,4 @@
-import { ADD_ITEM, SAVE_ITEM, CLOSE_ITEM, OPEN_ITEM } from '../constants/action-types';
+import { ADD_ITEM, SAVE_ITEM, CLOSE_ITEM, OPEN_ITEM, SAVE_ITEMS } from '../constants/action-types';
 
 export function addItem(payload) {
   return { type: ADD_ITEM, payload };
@@ -14,4 +14,8 @@ export function closeItem(payload) {
 
 export function openItem(payload) {
   return { type: OPEN_ITEM, payload };
+}
+
+export function saveItems(payload) {
+  return { type: SAVE_ITEMS, payload }
 }

@@ -44,7 +44,7 @@ class ConnectedItem extends Component {
     this.setState({title: event.target.value, isSaved: false});
   }
 
-  handleKeyPress = (event) => {
+  handleKeyPress(event) {
     if(event.key === 'Enter'){
       event.preventDefault();
       const {itemId, title, isSaved, parentId} = this.state;
@@ -57,7 +57,7 @@ class ConnectedItem extends Component {
     }
   }
 
-  handleKeyDown = (event) => {
+  handleKeyDown(event) {
     if (event.key === 'Tab') {
       event.preventDefault();
       const {itemId} = this.state;
@@ -67,7 +67,7 @@ class ConnectedItem extends Component {
     }
   }
 
-  handleBlur = (event) => {
+  handleBlur(event) {
     event.preventDefault()
     const {itemId, title} = this.state;
     this.setState({isSaved: true})
