@@ -16,6 +16,11 @@ li.layer {
   display: none;
 }
 
+.childrenLayer ul {
+  padding-left: 0rem;
+  margin-left: 0rem;
+}
+
 :focus {
   outline: none;
 }
@@ -30,4 +35,13 @@ ul li.layer:first-child {
 
 ul li.layer:last-child {
   margin-bottom: 1rem;
+}
+
+.connectLine {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.connectLine svg {
+  height: inherit;
 }
