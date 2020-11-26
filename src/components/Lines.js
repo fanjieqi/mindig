@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 
 const InputHeight = 23.8;
+const WIDTH = 100;
 
 class Line extends Component {
   constructor(props) {
@@ -12,16 +13,21 @@ class Line extends Component {
 
   render() {
     const { itemId } = this.state;
-    const { length } = this.props;
-    const height = length * InputHeight;
-    const width = 100;
+    const { items, length } = this.props;
+    const height = this.props.height
+    let offset = 0;
     if (length > 0) {
       return (
-        <div className='connectLine' style={{width: `${width}px`, height: `${height}px`}}>
+        <div className='connectLine' style={{width: `${WIDTH}px`, height: `${height}px`}}>
           <svg >
-            {[...Array(length)].map((_, index) => (
-              <path d={`M ${0},${height / 2} C ${width/2},${height / 2} ${0},${(index + 0.5) *InputHeight} ${width},${(index + 0.5) *InputHeight}`} key={`line_${itemId}_${index}`} fill="none" stroke="green" strokeWidth={5}/>
-            ))}
+            {[...Array(length)].map((_, index) => {
+              const childrenHeight = items[items[itemId].children[index]].height
+              offset += childrenHeight;
+              const targetHeight = offset - childrenHeight / 2
+              return (
+                <path d={`M ${0},${height / 2} C ${WIDTH/2},${height / 2} ${0},${targetHeight} ${WIDTH},${targetHeight}`} key={`line_${itemId}_${index}`} fill="none" stroke="green" strokeWidth={5}/>
+              )
+            })}
           </svg>
         </div>
       )

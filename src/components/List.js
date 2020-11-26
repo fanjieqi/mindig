@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import { GlobalHotKeys  } from "react-hotkeys";
 import Item from './Item';
 import Lines from './Lines';
+import Layer from './Layer';
 import {saveItems} from '../actions/index';
 
 const mapStateToProps = (state) => {
@@ -22,43 +23,6 @@ class ConnectedList extends Component {
       rootX: props.rootX,
       rootY: props.rootY
     }
-    this.childrenRef = React.createRef();
-  }
-
-  componentDidMount() {
-    this.getRectsInterval = setInterval(() => {
-      if (this.childrenRef == null || this.childrenRef.current == null) return
-      const { height } = this.childrenRef.current.getBoundingClientRect();
-      const { childrenHeight } = this.state
-      if (height !== childrenHeight) {
-        console.log( this.childrenRef)
-        this.setState({childrenHeight: height})
-      }
-    }, 50);
-  }
-
-  componentWillUnmount() {
-    clearInterval(this.getRectsInterval);
-  }
-
-  printItem(items, itemId, parentId = null) {
-    return (
-      <li className={'layer item' + itemId } key={'printItem'+itemId}>
-        <div>
-          <Item itemId={itemId} title={items[itemId].title} parentId={items[itemId].parentId} showMinus={items[itemId].showMinus} />
-        </div>
-        <Lines itemId={itemId} length={items[itemId].children.length} />
-        { (items[itemId].children.length > 0) && (
-          <div className={`childrenLayer ${items[itemId].isClosed ? 'closed' : 'opened'}`}  ref={this.childrenRef} key={`children${itemId}`}>
-            <ul>
-              {items[itemId].children.map((childId) => (
-                this.printItem(items, childId, itemId)  
-              ))}
-            </ul>
-          </div>
-        )}
-      </li>
-    )
   }
 
   render() {
@@ -77,7 +41,7 @@ class ConnectedList extends Component {
     return (
       <GlobalHotKeys keyMap={this.keyMap} handlers={this.handlers}>
         <ul className='itemsArea'>
-          {this.printItem(items, 0)}
+          <Layer items={items} itemId={0} key={0}/>
         </ul>
       </GlobalHotKeys >
     )

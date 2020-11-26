@@ -1,15 +1,15 @@
-import { ADD_ITEM, SAVE_ITEM, CLOSE_ITEM, OPEN_ITEM, SAVE_ITEMS, DELETE_ITEM } from '../constants/action-types';
+import { ADD_ITEM, SAVE_ITEM, CLOSE_ITEM, OPEN_ITEM, SAVE_ITEMS, DELETE_ITEM, SET_CHILDREN_HEIGHT } from '../constants/action-types';
 var _ = require('lodash');
 
 const initialState = {
-  items: {0: {title: 'Root', itemId: 0, parentId: null, children: [], isClosed: false}},
+  items: {0: {title: 'Root', itemId: 0, parentId: null, children: [], isClosed: false, height: 0}},
 };
 
 let totalItem = 0;
 
 function addItem(state, payload) {
   totalItem += 1
-  let item = Object.assign({}, payload, {itemId: totalItem, children: []})
+  let item = Object.assign({}, payload, {itemId: totalItem, children: [], isClosed: false, height: 0})
   let items = Object.assign({}, state.items, {[totalItem]: item})
   let parent = items[item.parentId]
   if (item.afterId) {
@@ -53,6 +53,7 @@ function openItem(state, payload) {
 }
 
 function saveItems(state, payload) {
+  console.log('saveItems', state.items)
   let items = Object.assign({}, state.items)
   return Object.assign({}, state, {
     items: items
@@ -65,6 +66,15 @@ function deleteItem(state, payload) {
   let {itemId} = payload
   let item = items[itemId]
   _.remove(items[item.parentId].children, child => child === itemId)
+  return Object.assign({}, state, {
+    items: items
+  });
+}
+
+function setChildrenHeight(state, payload) {
+  let items = Object.assign({}, state.items)
+  let {itemId, height} = payload
+  items[itemId].height = height
   return Object.assign({}, state, {
     items: items
   });
@@ -83,7 +93,9 @@ function rootReducer(state = initialState, action) {
     return saveItems(state, action.payload)
   } else if (action.type === DELETE_ITEM) {
     return deleteItem(state, action.payload)
-  }
+  } else if (action.type === SET_CHILDREN_HEIGHT) {
+    return setChildrenHeight(state, action.payload)
+  } 
 
   return state;
 }

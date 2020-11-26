@@ -12,6 +12,10 @@ li.layer {
   vertical-align: middle;
 }
 
+.childrenLayer {
+  height: fit-content; 
+}
+
 .childrenLayer.closed {
   display: none;
 }
@@ -30,16 +34,16 @@ li.layer {
 }
 
 ul li.layer:first-child {
-  margin-top: 1rem;
+  /* margin-top: 1rem; */
 }
 
 ul li.layer:last-child {
-  margin-bottom: 1rem;
+  /* margin-bottom: 1rem; */
 }
 
 .connectLine {
-  margin-top: 1rem;
-  margin-bottom: 1rem;
+  /* margin-top: 1rem;
+  margin-bottom: 1rem; */
 }
 
 .connectLine svg {
