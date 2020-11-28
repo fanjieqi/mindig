@@ -66,6 +66,7 @@ function deleteItem(state, payload) {
   let {itemId} = payload
   let item = items[itemId]
   _.remove(items[item.parentId].children, child => child === itemId)
+  _.each(items[itemId].children, function(childId){ delete items[childId] })
   delete items[itemId]
   return Object.assign({}, state, {
     items: items
