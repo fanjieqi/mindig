@@ -54,11 +54,19 @@ ul li.layer:last-child {
   height: inherit;
 }
 
+.workspace-layout {
+  margin-top: 4rem;
+  height: calc(100vh - 8.5rem);
+}
+
+.login-layout {
+  height: calc(100vh - 69.6px);
+}
+
 .site-layout {
   padding: 2rem;
   margin: 0rem;
-  min-height: calc(100vh - 8.5rem);
-  margin-top: 4rem;
+  min-height: 300px;
 }
 
 .site-layout-background {
@@ -84,4 +92,26 @@ ul li.layer:last-child {
 
 .notificationItem .ant-badge {
   vertical-align: middle;
+}
+
+
+#login .login-form {
+  max-width: 300px;
+}
+#login .login-form-forgot {
+  float: right;
+}
+#login .ant-col-rtl .login-form-forgot {
+  float: left;
+}
+#login .login-form-button {
+  width: 100%;
+}
+
+#login {
+  top:40%;
+  left: 50%;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  width: 20rem;
 }
