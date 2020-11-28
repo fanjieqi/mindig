@@ -1,8 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import { GlobalHotKeys  } from "react-hotkeys";
-import Item from './Item';
-import Lines from './Lines';
 import Layer from './Layer';
 import {saveItems} from '../actions/index';
 

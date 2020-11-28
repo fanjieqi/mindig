@@ -1,3 +1,5 @@
+@import '~antd/dist/antd.css';
+
 li.layer {
   display: flex;
 }
@@ -50,4 +52,23 @@ ul li.layer:last-child {
 
 .connectLine svg {
   height: inherit;
+}
+
+.site-layout {
+  padding: 2rem;
+  margin: 0rem;
+  min-height: calc(100vh - 8.5rem);
+  margin-top: 4rem;
+}
+
+.site-layout-background {
+  background: #fff;
+}
+
+.ant-layout-header .logo {
+  float: left;
+  width: 6rem;
+  color: #563d7c;
+  font-weight: bolder;
+  background: rgba(255, 255, 255, 0.3);
 }

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-const InputHeight = 23.8;
+const InputHeight = 27.6;
 const WIDTH = 100;
 
 class Line extends Component {
@@ -26,7 +26,7 @@ class Line extends Component {
               offset += childrenHeight;
               const targetHeight = offset - childrenHeight / 2
               return (
-                <path d={`M ${0},${height / 2} C ${WIDTH/2},${height / 2} ${WIDTH/2},${targetHeight} ${WIDTH},${targetHeight}`} key={`line_${itemId}_${index}`} fill='none' stroke='green' strokeWidth={5} strokeLinecap='round'/>
+                <path d={`M ${0},${height / 2} C ${WIDTH/2},${height / 2} ${WIDTH/2},${targetHeight} ${WIDTH},${targetHeight}`} key={`line_${itemId}_${index}`} fill='none' stroke=' #563d7c' strokeWidth={5} strokeLinecap='round'/>
               )
             })}
           </svg>
