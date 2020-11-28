@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import { Layout, Menu, Divider, Typography } from 'antd';
-import { FileOutlined, EditOutlined, QuestionCircleOutlined } from '@ant-design/icons';
+import { Layout, Menu, Divider, Typography, Avatar, Badge } from 'antd';
+import { FileOutlined, EditOutlined, QuestionCircleOutlined, BellOutlined, UserOutlined, } from '@ant-design/icons';
 const { Header } = Layout;
 const { SubMenu } = Menu;
 const { Text } = Typography;
@@ -17,6 +17,21 @@ class ConnectedHeader extends Component {
   }
 
   render() {
+    const notificationTitle = (
+      <span className="notificationItem">
+        <Badge count={1}>
+          <BellOutlined style={{fontSize: '25px', marginRight: '0px'}}/>
+        </Badge>
+      </span>
+    )
+
+    const userTitle = (
+      <span>
+        <Avatar icon={<UserOutlined />} />
+        <span style={{marginLeft: '10px'}}>Jackie Fan</span>
+      </span>
+    )
+
     return (
       <Header style={{ position: 'fixed', zIndex: 1, width: '100%', background: '#fff' }}>
         <div className="logo" >Mindig</div>
@@ -82,6 +97,14 @@ class ConnectedHeader extends Component {
             <Menu.Item key="helpMenu:2">Release Notes</Menu.Item>
             <Divider style={{margin: 0}}/>
             <Menu.Item key="helpMenu:3">About</Menu.Item>
+          </SubMenu>
+
+          <SubMenu key="SubMenu5" title={userTitle} style={{float: 'right'}}>
+            <Menu.Item key="userMenu:1" style={{minWidth: '200px'}}>Profile</Menu.Item>
+            <Menu.Item key="userMenu:2">Setting</Menu.Item>
+          </SubMenu>
+
+          <SubMenu key="SubMenu4" title={notificationTitle} style={{float: 'right'}}>
           </SubMenu>
         </Menu>
       </Header>
