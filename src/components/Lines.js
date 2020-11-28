@@ -16,16 +16,17 @@ class Line extends Component {
     const { items, length } = this.props;
     const height = this.props.height
     let offset = 0;
-    if (length > 0) {
+    if (length > 0 && !items[itemId].isClosed) {
       return (
         <div className='connectLine' style={{width: `${WIDTH}px`, height: `${height}px`}}>
           <svg >
             {[...Array(length)].map((_, index) => {
-              const childrenHeight = items[items[itemId].children[index]].height
+              let childrenHeight = items[items[itemId].children[index]].height
+              childrenHeight = InputHeight > childrenHeight ? InputHeight : childrenHeight
               offset += childrenHeight;
               const targetHeight = offset - childrenHeight / 2
               return (
-                <path d={`M ${0},${height / 2} C ${WIDTH/2},${height / 2} ${0},${targetHeight} ${WIDTH},${targetHeight}`} key={`line_${itemId}_${index}`} fill="none" stroke="green" strokeWidth={5}/>
+                <path d={`M ${0},${height / 2} C ${WIDTH/2},${height / 2} ${WIDTH/2},${targetHeight} ${WIDTH},${targetHeight}`} key={`line_${itemId}_${index}`} fill='none' stroke='green' strokeWidth={5} strokeLinecap='round'/>
               )
             })}
           </svg>

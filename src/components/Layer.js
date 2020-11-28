@@ -39,18 +39,18 @@ class ConnectedLayer extends Component {
     const {itemId} = this.state;
     const {items} = this.props;
     return (
-      <li className={'layer item' + itemId } key={'printItem'+itemId} ref={this.childrenRef}>
+      <li className={'layer item' + itemId } key={'printItem'+itemId} >
         <div>
         <Item itemId={itemId} title={items[itemId].title} parentId={items[itemId].parentId} showMinus={items[itemId].showMinus} />
         </div>
         <Lines items={items} itemId={itemId} length={items[itemId].children.length} height={items[itemId].height} />
-          <div className={`childrenLayer ${items[itemId].isClosed ? 'closed' : 'opened'}`} key={`childrenLayer${itemId}`}>
-            <ul>
-              {items[itemId].children.map((childId) => (
-                <Layer items={items} itemId={childId} parentId={itemId} key={childId}/>
-              ))}
-            </ul>
-          </div>
+        <div className={`childrenLayer ${items[itemId].isClosed ? 'closed' : 'opened'}`} key={`childrenLayer${itemId}`} ref={this.childrenRef}>
+          <ul>
+            {items[itemId].children.map((childId) => (
+              <Layer items={items} itemId={childId} parentId={itemId} key={childId}/>
+            ))}
+          </ul>
+        </div>
       </li>
     )
   }

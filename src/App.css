@@ -6,6 +6,7 @@ li.layer {
   position: relative;
   top: 50%;
   transform: translateY(-50%);
+  width: max-content;
 }
 
 .iconPlus, .iconMinus {
@@ -23,6 +24,7 @@ li.layer {
 .childrenLayer ul {
   padding-left: 0rem;
   margin-left: 0rem;
+  min-height: 23.8px;
 }
 
 :focus {
