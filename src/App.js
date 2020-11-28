@@ -2,7 +2,7 @@ import React from 'react';
 import { Layout } from 'antd';
 import List from './components/List';
 import MyHeader from './components/MyHeader';
-import './App.css';
+import './App.less';
 const { Content, Footer } = Layout;
 var moment = require('moment'); 
 
