@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import { Layout, Menu, Divider, Typography, Avatar, Badge } from 'antd';
-import { FileOutlined, EditOutlined, QuestionCircleOutlined, BellOutlined, UserOutlined, } from '@ant-design/icons';
+import { FileOutlined, EditOutlined, QuestionCircleOutlined, BellOutlined, UserOutlined, SettingOutlined, LogoutOutlined } from '@ant-design/icons';
 const { Header } = Layout;
 const { SubMenu } = Menu;
 const { Text } = Typography;
@@ -100,8 +100,10 @@ class ConnectedHeader extends Component {
           </SubMenu>
 
           <SubMenu key="SubMenu5" title={userTitle} style={{float: 'right'}}>
-            <Menu.Item key="userMenu:1" style={{minWidth: '200px'}}>Profile</Menu.Item>
-            <Menu.Item key="userMenu:2">Setting</Menu.Item>
+            <Menu.Item key="userMenu:1" icon={<UserOutlined />} style={{minWidth: '200px'}}>Profile</Menu.Item>
+            <Menu.Item key="userMenu:2" icon={<SettingOutlined />}>Setting</Menu.Item>
+            <Divider style={{margin: 0}}/>
+            <Menu.Item key="userMenu:3" icon={<LogoutOutlined />}>Logout</Menu.Item>
           </SubMenu>
 
           <SubMenu key="SubMenu4" title={notificationTitle} style={{float: 'right'}}>
