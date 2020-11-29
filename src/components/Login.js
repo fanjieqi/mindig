@@ -6,7 +6,6 @@ import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import MyFooter from './MyFooter';
 const { Content } = Layout;
 const { Title } = Typography;
-var moment = require('moment'); 
 
 function mapDispatchToProps(dispatch) {
   return {
