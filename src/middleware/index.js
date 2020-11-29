@@ -1,6 +1,6 @@
 import { ADD_ITEM } from '../constants/action-types';
 
-const forbiddenWords = [""];
+const forbiddenWords = ["Fuck"];
 
 export function forbiddenWordsMiddleware({ dispatch }) {
   return function(next) {

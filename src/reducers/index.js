@@ -12,11 +12,11 @@ function addItem(state, payload) {
   let item = Object.assign({}, payload, {itemId: totalItem, children: [], isClosed: false, height: 0})
   let items = Object.assign({}, state.items, {[totalItem]: item})
   let parent = items[item.parentId]
-  if (item.afterId) {
+  if (item.beforeId) {
     let index = parent.children.findIndex( itemId => {
-      return itemId === item.afterId;
+      return itemId === item.beforeId;
     });
-    parent.children.splice(index+1, 0, item.itemId);
+    parent.children.splice(index, 0, item.itemId);
   } else {
     parent.children = parent.children.concat(item.itemId)
   }

@@ -22,7 +22,6 @@ class ConnectedItem extends Component {
       parentId: props.parentId,
       isClosed: props.isClosed,
       showMinus: props.showMinus,
-      isSaved: false,
       keysPress: {},
     };
     this.handleClick = this.handleClick.bind(this);
@@ -43,19 +42,18 @@ class ConnectedItem extends Component {
   }
 
   handleChange(event) {
-    this.setState({title: event.target.value, isSaved: false});
+    this.setState({title: event.target.value});
+    const {itemId, title} = this.state;
+    this.props.saveItem({itemId: itemId, title: title});
   }
 
   handleKeyPress(event) {
     if(event.key === 'Enter'){
       event.preventDefault();
-      const {itemId, title, isSaved, parentId} = this.state;
-      if (isSaved) {
-        this.props.addItem({parentId: parentId, afterId: itemId})
-      } else {
-        this.setState({isSaved: true})
-        this.props.saveItem({title: title, itemId: itemId});
-      }
+      const {itemId, title, parentId} = this.state;
+      this.props.addItem({parentId: parentId, beforeId: itemId, title: title})
+      this.setState({title: ''})
+      this.props.saveItem({itemId: itemId, title: ''});
     }
   }
 
@@ -77,7 +75,6 @@ class ConnectedItem extends Component {
   handleBlur(event) {
     event.preventDefault()
     const {itemId, title} = this.state;
-    this.setState({isSaved: true})
     this.props.saveItem({title: title, itemId: itemId});
   }
 
