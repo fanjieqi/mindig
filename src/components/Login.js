@@ -3,7 +3,8 @@ import {connect} from 'react-redux';
 import { Form, Input, Checkbox, Button, Typography } from 'antd';
 import Layout from 'antd/lib/layout/layout';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
-const { Content, Footer } = Layout;
+import MyFooter from './MyFooter';
+const { Content } = Layout;
 const { Title } = Typography;
 var moment = require('moment'); 
 
@@ -66,7 +67,7 @@ class ConnectedLogin extends Component {
             </Form.Item>
           </Form>
         </Content>
-        <Footer style={{ textAlign: 'center' }}>Mindig ©{moment().year()} Created by Jackie Fan</Footer>
+        <MyFooter />
       </Layout>
     )
   }

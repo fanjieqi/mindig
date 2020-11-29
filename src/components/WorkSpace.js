@@ -3,7 +3,8 @@ import { Layout } from 'antd';
 import List from './List';
 import MyHeader from './MyHeader';
 import '../App.less';
-const { Content, Footer } = Layout;
+import MyFooter from './MyFooter';
+const { Content } = Layout;
 var moment = require('moment'); 
 
 const WorkSpace = () => (
@@ -12,7 +13,7 @@ const WorkSpace = () => (
     <Content className="site-layout workspace-layout site-layout-background">
       <List />
     </Content>
-    <Footer style={{ textAlign: 'center' }}>Mindig ©{moment().year()} Created by Jackie Fan</Footer>
+    <MyFooter />
   </Layout>
 );
 
