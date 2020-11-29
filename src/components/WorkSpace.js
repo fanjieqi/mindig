@@ -5,7 +5,6 @@ import MyHeader from './MyHeader';
 import '../App.less';
 import MyFooter from './MyFooter';
 const { Content } = Layout;
-var moment = require('moment'); 
 
 const WorkSpace = () => (
   <Layout className="layout">

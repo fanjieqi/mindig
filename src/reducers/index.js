@@ -1,11 +1,18 @@
-import { ADD_ITEM, SAVE_ITEM, CLOSE_ITEM, OPEN_ITEM, SAVE_ITEMS, DELETE_ITEM, SET_CHILDREN_HEIGHT } from '../constants/action-types';
+import { ADD_ITEM, SAVE_ITEM, CLOSE_ITEM, OPEN_ITEM, SAVE_LIST, DELETE_ITEM, SET_CHILDREN_HEIGHT } from '../constants/action-types';
 var _ = require('lodash');
 
+const basicItems = {0: {title: 'Root', itemId: 0, parentId: null, children: [], isClosed: false, height: 0}}
+const lists = JSON.parse(localStorage.getItem('lists')) || {};
+const listId = parseInt(localStorage.getItem('listId')) || 0;
+const items = (lists && lists[listId]) || basicItems
+
 const initialState = {
-  items: {0: {title: 'Root', itemId: 0, parentId: null, children: [], isClosed: false, height: 0}},
+  lists:  lists,
+  listId: listId,
+  items: items,
 };
 
-let totalItem = 0;
+let totalItem = Object.keys(items).length;
 
 function addItem(state, payload) {
   totalItem += 1
@@ -52,10 +59,13 @@ function openItem(state, payload) {
   });
 }
 
-function saveItems(state, payload) {
-  console.log('saveItems', state.items)
+function saveList(state, payload) {
   let items = Object.assign({}, state.items)
+  let lists = Object.assign({}, state.lists)
+  lists[state.listId] = items;
+  localStorage.setItem('lists', JSON.stringify(lists));
   return Object.assign({}, state, {
+    lists: lists,
     items: items
   });
 }
@@ -91,8 +101,8 @@ function rootReducer(state = initialState, action) {
     return closeItem(state, action.payload)
   } else if (action.type === OPEN_ITEM) {
     return openItem(state, action.payload)
-  } else if (action.type === SAVE_ITEMS) {
-    return saveItems(state, action.payload)
+  } else if (action.type === SAVE_LIST) {
+    return saveList(state, action.payload)
   } else if (action.type === DELETE_ITEM) {
     return deleteItem(state, action.payload)
   } else if (action.type === SET_CHILDREN_HEIGHT) {
