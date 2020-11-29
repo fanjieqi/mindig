@@ -6,12 +6,10 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 const App = () => (
   <Router>
     <Switch>
-      <Route path="/workspace">
-        <WorkSpace />
+      <Route path="/workspace" component={WorkSpace}>
       </Route>
 
-      <Route path="/login">
-        <Login />
+      <Route path="/login" component={Login}>
       </Route>
     </Switch>
   </Router>

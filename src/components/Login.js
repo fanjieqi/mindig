@@ -21,6 +21,7 @@ class ConnectedLogin extends Component {
 
   onFinish(values) {
     console.log('Success:', values);
+    this.props.history.push('/workspace');
   };
 
   onFinishFailed(errorInfo) {
