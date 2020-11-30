@@ -17,6 +17,9 @@ function mapDispatchToProps(dispatch) {
 class ConnectedHeader extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      selectedKeys: []
+    }
   }
 
   handleBlur = (event) => {
@@ -50,7 +53,7 @@ class ConnectedHeader extends Component {
     return (
       <Header style={{ position: 'fixed', zIndex: 1, width: '100%', background: '#fff' }}>
         <div className="logo" >Mindig</div>
-        <Menu theme="light" mode="horizontal" defaultSelectedKeys={['2']} onSelect={this.handleSelect} onBlur={this.handleBlur}>
+        <Menu theme="light" mode="horizontal" defaultSelectedKeys={['2']} onSelect={this.handleSelect} onBlur={this.handleBlur}  selectedKeys={[this.state.selectedKeys]}>
           <SubMenu key="SubMenu1" title="File" icon={<FileOutlined />}>
             <Menu.Item key="fileMenu:newList" style={{minWidth: '200px'}}>
               <Text>New File</Text>
