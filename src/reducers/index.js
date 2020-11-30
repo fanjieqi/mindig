@@ -1,10 +1,10 @@
-import { ADD_ITEM, SAVE_ITEM, CLOSE_ITEM, OPEN_ITEM, SAVE_LIST, DELETE_ITEM, SET_CHILDREN_HEIGHT } from '../constants/action-types';
+import { ADD_ITEM, SAVE_ITEM, CLOSE_ITEM, OPEN_ITEM, SAVE_LIST, DELETE_ITEM, SET_CHILDREN_HEIGHT, NEW_LIST } from '../constants/action-types';
 var _ = require('lodash');
 
 const basicItems = {0: {title: 'Root', itemId: 0, parentId: null, children: [], isClosed: false, height: 0}}
 const lists = JSON.parse(localStorage.getItem('lists')) || {};
 const listId = parseInt(localStorage.getItem('listId')) || 0;
-const items = (lists && lists[listId]) || basicItems
+const items = Object.assign({}, (lists && lists[listId]) || basicItems)
 
 const initialState = {
   lists:  lists,
@@ -12,7 +12,8 @@ const initialState = {
   items: items,
 };
 
-let totalItem = Object.keys(items).length;
+let totalList = _.max(_.map(Object.keys(lists), (key) => parseInt(key))) || 0;
+let totalItem = _.max(_.map(Object.keys(items), (key) => parseInt(key))) || 0;
 
 function addItem(state, payload) {
   totalItem += 1
@@ -59,7 +60,21 @@ function openItem(state, payload) {
   });
 }
 
-function saveList(state, payload) {
+function newList(state) {
+  saveList(state)
+  totalList += 1
+  totalItem = 0
+  let listId = totalList;
+  localStorage.setItem('listId', listId);
+  let items = Object.assign({}, basicItems);
+  items[totalItem].children = []
+  return Object.assign({}, state, {
+    listId: listId,
+    items: items
+  });
+}
+
+function saveList(state) {
   let items = Object.assign({}, state.items)
   let lists = Object.assign({}, state.lists)
   lists[state.listId] = items;
@@ -101,8 +116,10 @@ function rootReducer(state = initialState, action) {
     return closeItem(state, action.payload)
   } else if (action.type === OPEN_ITEM) {
     return openItem(state, action.payload)
+  } else if (action.type === NEW_LIST) {
+    return newList(state)
   } else if (action.type === SAVE_LIST) {
-    return saveList(state, action.payload)
+    return saveList(state)
   } else if (action.type === DELETE_ITEM) {
     return deleteItem(state, action.payload)
   } else if (action.type === SET_CHILDREN_HEIGHT) {

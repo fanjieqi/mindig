@@ -2,13 +2,14 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import { Layout, Menu, Divider, Typography, Avatar, Badge } from 'antd';
 import { FileOutlined, EditOutlined, QuestionCircleOutlined, BellOutlined, UserOutlined, SettingOutlined, LogoutOutlined } from '@ant-design/icons';
-import { saveList } from '../actions/index';
+import { newList, saveList } from '../actions/index';
 const { Header } = Layout;
 const { SubMenu } = Menu;
 const { Text } = Typography;
 
 function mapDispatchToProps(dispatch) {
   return {
+    newList: () => dispatch(newList()),
     saveList: () => dispatch(saveList()),
   };
 }
@@ -23,7 +24,9 @@ class ConnectedHeader extends Component {
   }
 
   handleSelect = (event) => {
-    if (event.key === 'fileMenu:saveList'){
+    if (event.key === 'fileMenu:newList') {
+      this.props.newList()
+    } else if (event.key === 'fileMenu:saveList'){
       this.props.saveList()
     }
   }
@@ -49,7 +52,7 @@ class ConnectedHeader extends Component {
         <div className="logo" >Mindig</div>
         <Menu theme="light" mode="horizontal" defaultSelectedKeys={['2']} onSelect={this.handleSelect} onBlur={this.handleBlur}>
           <SubMenu key="SubMenu1" title="File" icon={<FileOutlined />}>
-            <Menu.Item key="fileMenu:1" style={{minWidth: '200px'}}>
+            <Menu.Item key="fileMenu:newList" style={{minWidth: '200px'}}>
               <Text>New File</Text>
               <Text type="secondary" className='fileMenuShortCut'>Ctrl+N</Text>
             </Menu.Item>

@@ -43,7 +43,7 @@ class ConnectedLayer extends Component {
         <div>
         <Item itemId={itemId} title={items[itemId].title} parentId={items[itemId].parentId} showMinus={items[itemId].showMinus} />
         </div>
-        <Lines items={items} itemId={itemId} length={items[itemId].children.length} height={items[itemId].height} />
+        <Lines items={items} itemId={itemId} />
         <div className={`childrenLayer ${items[itemId].isClosed ? 'closed' : 'opened'}`} key={`childrenLayer${itemId}`} ref={this.childrenRef}>
           <ul>
             {items[itemId].children.map((childId) => (

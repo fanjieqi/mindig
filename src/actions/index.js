@@ -1,4 +1,4 @@
-import { ADD_ITEM, SAVE_ITEM, CLOSE_ITEM, OPEN_ITEM, SAVE_LIST, DELETE_ITEM, SET_CHILDREN_HEIGHT } from '../constants/action-types';
+import { ADD_ITEM, SAVE_ITEM, CLOSE_ITEM, OPEN_ITEM, NEW_LIST, SAVE_LIST, DELETE_ITEM, SET_CHILDREN_HEIGHT } from '../constants/action-types';
 
 export function addItem(payload) {
   return { type: ADD_ITEM, payload };
@@ -14,6 +14,10 @@ export function closeItem(payload) {
 
 export function openItem(payload) {
   return { type: OPEN_ITEM, payload };
+}
+
+export function newList(payload) {
+  return {type: NEW_LIST, payload }
 }
 
 export function saveList(payload) {

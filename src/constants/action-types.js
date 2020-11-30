@@ -6,3 +6,4 @@ export const TITLE_FORBIDDEN = 'TITLE_FORBIDDEN';
 export const SAVE_LIST = 'SAVE_LIST';
 export const DELETE_ITEM = 'DELETE_ITEM';
 export const SET_CHILDREN_HEIGHT = 'SET_CHILDREN_HEIGHT';
+export const NEW_LIST = 'NEW_LIST'
