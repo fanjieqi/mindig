@@ -1,5 +1,7 @@
-import { ADD_ITEM, SAVE_ITEM, CLOSE_ITEM, OPEN_ITEM, SAVE_LIST, DELETE_ITEM, SET_CHILDREN_HEIGHT, NEW_LIST } from '../constants/action-types';
+import { ADD_ITEM, SAVE_ITEM, CLOSE_ITEM, OPEN_ITEM, SAVE_LIST, DELETE_ITEM, SET_CHILDREN_HEIGHT, NEW_LIST, EXPORT_LIST } from '../constants/action-types';
+import exportListToMarkdownByDfs from '../utils/exportListToMarkdownByDfs';
 var _ = require('lodash');
+var moment = require('moment'); 
 
 const basicItems = {0: {title: 'Root', itemId: 0, parentId: null, children: [], isClosed: false, height: 0}}
 const lists = JSON.parse(localStorage.getItem('lists')) || {};
@@ -85,6 +87,20 @@ function saveList(state) {
   });
 }
 
+function exportList(state) {
+  let items = Object.assign({}, state.items)
+  const result = exportListToMarkdownByDfs(items)
+
+  const element = document.createElement("a");
+  const file = new Blob([result], {type: 'text/markdown'});
+  element.href = URL.createObjectURL(file);
+  element.download = `${items[0].title} - ${moment().format()}.md`;
+  document.body.appendChild(element);
+  element.click();
+
+  return state;
+}
+
 function deleteItem(state, payload) {
   console.log('deleteItem')
   let items = Object.assign({}, state.items)
@@ -120,6 +136,8 @@ function rootReducer(state = initialState, action) {
     return newList(state)
   } else if (action.type === SAVE_LIST) {
     return saveList(state)
+  } else if (action.type === EXPORT_LIST) {
+    return exportList(state)
   } else if (action.type === DELETE_ITEM) {
     return deleteItem(state, action.payload)
   } else if (action.type === SET_CHILDREN_HEIGHT) {

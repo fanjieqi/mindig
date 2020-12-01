@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import { Layout, Menu, Divider, Typography, Avatar, Badge } from 'antd';
 import { FileOutlined, EditOutlined, QuestionCircleOutlined, BellOutlined, UserOutlined, SettingOutlined, LogoutOutlined } from '@ant-design/icons';
-import { newList, saveList } from '../actions/index';
+import { newList, saveList, exportList } from '../actions/index';
 const { Header } = Layout;
 const { SubMenu } = Menu;
 const { Text } = Typography;
@@ -11,6 +11,7 @@ function mapDispatchToProps(dispatch) {
   return {
     newList: () => dispatch(newList()),
     saveList: () => dispatch(saveList()),
+    exportList: () => dispatch(exportList()),
   };
 }
 
@@ -31,6 +32,8 @@ class ConnectedHeader extends Component {
       this.props.newList()
     } else if (event.key === 'fileMenu:saveList'){
       this.props.saveList()
+    } else if (event.key === 'fileMenu:exportList'){
+      this.props.exportList()
     }
   }
 
@@ -69,7 +72,7 @@ class ConnectedHeader extends Component {
               <Text>Save</Text>
               <Text type="secondary" className='fileMenuShortCut'>Ctrl+S</Text>
             </Menu.Item>
-            <Menu.Item key="fileMenu:4">
+            <Menu.Item key="fileMenu:exportList">
               <Text>Save as</Text>
               <Text type="secondary" className='fileMenuShortCut'>Ctrl+Shift+S</Text>
             </Menu.Item>

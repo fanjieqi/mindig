@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import { GlobalHotKeys  } from "react-hotkeys";
 import Layer from './Layer';
-import {saveList} from '../actions/index';
+import { saveList, exportList } from '../actions/index';
 
 const mapStateToProps = (state) => {
   return {items: state.items};
@@ -10,7 +10,8 @@ const mapStateToProps = (state) => {
 
 function mapDispatchToProps(dispatch) {
   return {
-    saveList: (item) => dispatch(saveList(item)),
+    saveList: () => dispatch(saveList()),
+    exportList: () => dispatch(exportList()),
   };
 }
 
@@ -21,14 +22,19 @@ class ConnectedList extends Component {
 
   render() {
     this.keyMap = {
-      SAVE_LIST: "ctrl+s"
+      SAVE_LIST: "ctrl+s",
+      EXPORT_LIST: 'ctrl+shift+s',
     }
 
     this.handlers = {
       SAVE_LIST: (event) => {
         event.preventDefault()
         this.props.saveList()
-      }
+      },
+      EXPORT_LIST: (event) => {
+        event.preventDefault()
+        this.props.exportList()
+      },
     }
 
     const {items} = this.props;
