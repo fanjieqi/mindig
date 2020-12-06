@@ -17,7 +17,7 @@ class ConnectedItem extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      title: props.title,
+      title: props.title || '',
       itemId: props.itemId,
       parentId: props.parentId,
       isClosed: props.isClosed,
@@ -43,8 +43,6 @@ class ConnectedItem extends Component {
 
   handleChange(event) {
     this.setState({title: event.target.value});
-    const {itemId, title} = this.state;
-    this.props.saveItem({itemId: itemId, title: title});
   }
 
   handleKeyPress(event) {

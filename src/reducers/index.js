@@ -1,4 +1,4 @@
-import { ADD_ITEM, SAVE_ITEM, CLOSE_ITEM, OPEN_ITEM, SAVE_LIST, DELETE_ITEM, SET_CHILDREN_HEIGHT, NEW_LIST, EXPORT_LIST } from '../constants/action-types';
+import { ADD_ITEM, SAVE_ITEM, CLOSE_ITEM, OPEN_ITEM, SAVE_LIST, DELETE_ITEM, SET_CHILDREN_HEIGHT, NEW_LIST, EXPORT_LIST, UNDO_LIST, REDO_LIST } from '../constants/action-types';
 import exportListToMarkdownByDfs from '../utils/exportListToMarkdownByDfs';
 var _ = require('lodash');
 var moment = require('moment'); 
@@ -6,7 +6,7 @@ var moment = require('moment');
 const basicItems = {0: {title: 'Root', itemId: 0, parentId: null, children: [], isClosed: false, height: 0}}
 const lists = JSON.parse(localStorage.getItem('lists')) || {};
 const listId = parseInt(localStorage.getItem('listId')) || 0;
-const items = Object.assign({}, (lists && lists[listId]) || basicItems)
+const items = JSON.parse(JSON.stringify((lists && lists[listId]) || basicItems))
 
 const initialState = {
   lists:  lists,
@@ -16,8 +16,24 @@ const initialState = {
 
 let totalList = _.max(_.map(Object.keys(lists), (key) => parseInt(key))) || 0;
 let totalItem = _.max(_.map(Object.keys(items), (key) => parseInt(key))) || 0;
+let histories = {};
+let historyIds = {};
+
+function saveHistory(state) {
+  console.log('saveHistory');
+  const { listId, items } = state;
+  if (!histories[listId]) {
+    histories[listId] = [];
+    historyIds[listId] = -1;
+  }
+  historyIds[listId] += 1;
+  histories[listId][historyIds[listId]] = JSON.parse(JSON.stringify(items));
+  histories[listId] = histories[listId].slice(0, historyIds[listId] + 1)
+}
 
 function addItem(state, payload) {
+  console.log('addItem');
+  saveHistory(state)
   totalItem += 1
   let item = Object.assign({}, payload, {itemId: totalItem, children: [], isClosed: false, height: 0})
   let items = Object.assign({}, state.items, {[totalItem]: item})
@@ -38,6 +54,7 @@ function addItem(state, payload) {
 function saveItem(state, payload) {
   let items = Object.assign({}, state.items)
   let {itemId, title} = payload
+  if (title !== items[itemId].title) saveHistory(state)
   items[itemId].title = title
   return Object.assign({}, state, {
     items: items
@@ -68,8 +85,8 @@ function newList(state) {
   totalItem = 0
   let listId = totalList;
   localStorage.setItem('listId', listId);
-  let items = Object.assign({}, basicItems);
-  items[totalItem].children = []
+  let items = JSON.parse(JSON.stringify(basicItems));
+  console.log('newList: ', items)
   return Object.assign({}, state, {
     listId: listId,
     items: items
@@ -101,8 +118,34 @@ function exportList(state) {
   return state;
 }
 
+function undoList(state) {
+  const { listId } = state;
+  if (!listId || !historyIds[listId] || !histories[listId]) return state;
+  console.log('undoList ', historyIds[listId]);
+  const items = Object.assign({}, histories[listId][historyIds[listId]])
+  historyIds[listId] -= 1
+  return Object.assign({}, state, {
+    items: items
+  });
+}
+
+function redoList(state) {
+  const { listId } = state;
+  console.log('redoList ', historyIds[listId]);
+  historyIds[listId] += 1
+  if (!listId || !historyIds[listId] || !histories[listId] || !histories[listId][historyIds[listId]]) {
+    historyIds[listId] -= 1
+    return state;
+  }
+  const items = Object.assign({}, histories[listId][historyIds[listId]])
+  return Object.assign({}, state, {
+    items: items
+  });
+}
+
 function deleteItem(state, payload) {
   console.log('deleteItem')
+  saveHistory(state)
   let items = Object.assign({}, state.items)
   let {itemId} = payload
   let item = items[itemId]
@@ -138,6 +181,10 @@ function rootReducer(state = initialState, action) {
     return saveList(state)
   } else if (action.type === EXPORT_LIST) {
     return exportList(state)
+  } else if (action.type === UNDO_LIST) {
+    return undoList(state)
+  } else if (action.type === REDO_LIST) {
+    return redoList(state)
   } else if (action.type === DELETE_ITEM) {
     return deleteItem(state, action.payload)
   } else if (action.type === SET_CHILDREN_HEIGHT) {

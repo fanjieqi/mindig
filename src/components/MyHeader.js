@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import { Layout, Menu, Divider, Typography, Avatar, Badge } from 'antd';
 import { FileOutlined, EditOutlined, QuestionCircleOutlined, BellOutlined, UserOutlined, SettingOutlined, LogoutOutlined } from '@ant-design/icons';
-import { newList, saveList, exportList } from '../actions/index';
+import { newList, saveList, exportList, undoList, redoList } from '../actions/index';
 const { Header } = Layout;
 const { SubMenu } = Menu;
 const { Text } = Typography;
@@ -12,6 +12,8 @@ function mapDispatchToProps(dispatch) {
     newList: () => dispatch(newList()),
     saveList: () => dispatch(saveList()),
     exportList: () => dispatch(exportList()),
+    undoList: () => dispatch(undoList()),
+    redoList: () => dispatch(redoList()),
   };
 }
 
@@ -34,6 +36,10 @@ class ConnectedHeader extends Component {
       this.props.saveList()
     } else if (event.key === 'fileMenu:exportList'){
       this.props.exportList()
+    } else if (event.key === 'editMenu:undoList'){
+      this.props.undoList()
+    } else if (event.key === 'editMenu:redoList'){
+      this.props.redoList()
     }
   }
 
@@ -81,11 +87,11 @@ class ConnectedHeader extends Component {
           </SubMenu>
           
           <SubMenu key="SubMenu2" title="Edit" icon={<EditOutlined />}>
-            <Menu.Item key="editMenu:1" style={{minWidth: '200px'}}>
+            <Menu.Item key="editMenu:undoList" style={{minWidth: '200px'}}>
               <Text>Undo</Text>
               <Text type="secondary" className='fileMenuShortCut'>Ctrl+Z</Text>
             </Menu.Item>
-            <Menu.Item key="editMenu:2">
+            <Menu.Item key="editMenu:redoList">
               <Text>Redo</Text>
               <Text type="secondary" className='fileMenuShortCut'>Ctrl+Y</Text>
             </Menu.Item>

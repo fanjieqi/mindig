@@ -8,3 +8,5 @@ export const DELETE_ITEM = 'DELETE_ITEM';
 export const SET_CHILDREN_HEIGHT = 'SET_CHILDREN_HEIGHT';
 export const NEW_LIST = 'NEW_LIST';
 export const EXPORT_LIST= 'EXPORT_LIST';
+export const UNDO_LIST = 'UNDO_LIST';
+export const REDO_LIST = 'REDO_LIST';
