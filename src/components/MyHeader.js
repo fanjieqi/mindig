@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import { Layout, Menu, Divider, Typography, Avatar, Badge } from 'antd';
 import { FileOutlined, EditOutlined, QuestionCircleOutlined, BellOutlined, UserOutlined, SettingOutlined, LogoutOutlined } from '@ant-design/icons';
 import { newList, saveList, exportList, undoList, redoList } from '../actions/index';
+import FilesModal from './FilesModal';
 const { Header } = Layout;
 const { SubMenu } = Menu;
 const { Text } = Typography;
@@ -21,6 +22,7 @@ class ConnectedHeader extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      filesModalVisible: false,
       selectedKeys: []
     }
   }
@@ -32,6 +34,8 @@ class ConnectedHeader extends Component {
   handleSelect = (event) => {
     if (event.key === 'fileMenu:newList') {
       this.props.newList()
+    } else if (event.key === 'fileMenu:showFilesModal'){
+      this.setState({filesModalVisible: true})
     } else if (event.key === 'fileMenu:saveList'){
       this.props.saveList()
     } else if (event.key === 'fileMenu:exportList'){
@@ -62,6 +66,7 @@ class ConnectedHeader extends Component {
     return (
       <Header style={{ position: 'fixed', zIndex: 1, width: '100%', background: '#fff' }}>
         <div className="logo" >Mindig</div>
+        <FilesModal key={Date.now()} visible={this.state.filesModalVisible}/>
         <Menu theme="light" mode="horizontal" defaultSelectedKeys={['2']} onSelect={this.handleSelect} onBlur={this.handleBlur}  selectedKeys={[this.state.selectedKeys]}>
           <SubMenu key="SubMenu1" title="File" icon={<FileOutlined />}>
             <Menu.Item key="fileMenu:newList" style={{minWidth: '200px'}}>
@@ -69,7 +74,7 @@ class ConnectedHeader extends Component {
               <Text type="secondary" className='fileMenuShortCut'>Ctrl+N</Text>
             </Menu.Item>
             <Divider style={{margin: 0}}/>
-            <Menu.Item key="fileMenu:2">
+            <Menu.Item key="fileMenu:showFilesModal">
               <Text>Open File</Text>
               <Text type="secondary" className='fileMenuShortCut'>Ctrl+O</Text>
             </Menu.Item>

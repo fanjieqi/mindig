@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import { GlobalHotKeys  } from "react-hotkeys";
 import Layer from './Layer';
 import { saveList, exportList, undoList, redoList } from '../actions/index';
+import FilesModal from './FilesModal';
 
 const mapStateToProps = (state) => {
   return {items: state.items};
@@ -20,6 +21,9 @@ function mapDispatchToProps(dispatch) {
 class ConnectedList extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      filesModalVisible: false
+    }
   }
 
   render() {
@@ -28,6 +32,7 @@ class ConnectedList extends Component {
       EXPORT_LIST: 'ctrl+shift+s',
       UNDO_LIST: 'ctrl+z',
       REDO_LIST: 'ctrl+y',
+      SHOW_FILES_MODAL: 'ctrl+o',
     }
 
     this.handlers = {
@@ -47,6 +52,10 @@ class ConnectedList extends Component {
         event.preventDefault()
         this.props.redoList()
       },
+      SHOW_FILES_MODAL: (event) => {
+        event.preventDefault()
+        this.setState({filesModalVisible: true})
+      },
     }
 
     const {items} = this.props;
@@ -55,6 +64,7 @@ class ConnectedList extends Component {
         <ul className='itemsArea'>
           <Layer items={items} itemId={0} key={0}/>
         </ul>
+        <FilesModal key={Date.now()} visible={this.state.filesModalVisible}/>
       </GlobalHotKeys >
     )
   }
