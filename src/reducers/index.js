@@ -1,9 +1,9 @@
-import { ADD_ITEM, SAVE_ITEM, CLOSE_ITEM, OPEN_ITEM, SAVE_LIST, DELETE_ITEM, SET_CHILDREN_HEIGHT, NEW_LIST, EXPORT_LIST, UNDO_LIST, REDO_LIST } from '../constants/action-types';
+import { ADD_ITEM, SAVE_ITEM, CLOSE_ITEM, OPEN_ITEM, SAVE_LIST, DELETE_ITEM, SET_CHILDREN_HEIGHT, NEW_LIST, OPEN_LIST, EXPORT_LIST, UNDO_LIST, REDO_LIST } from '../constants/action-types';
 import exportListToMarkdownByDfs from '../utils/exportListToMarkdownByDfs';
 var _ = require('lodash');
 var moment = require('moment'); 
 
-const basicItems = {0: {title: 'Root', itemId: 0, parentId: null, children: [], isClosed: false, height: 0}}
+const basicItems = {0: {title: 'Root', itemId: 0, parentId: null, children: [], isClosed: false, height: 0}, info: {fileName: 'Root', listId: 0}}
 const lists = JSON.parse(localStorage.getItem('lists')) || {};
 const listId = parseInt(localStorage.getItem('listId')) || 0;
 const items = JSON.parse(JSON.stringify((lists && lists[listId]) || basicItems))
@@ -56,6 +56,9 @@ function saveItem(state, payload) {
   let {itemId, title} = payload
   if (title !== items[itemId].title) saveHistory(state)
   items[itemId].title = title
+  if (itemId == 0) {
+    items.info.fileName = title
+  }
   return Object.assign({}, state, {
     items: items
   });
@@ -86,7 +89,20 @@ function newList(state) {
   let listId = totalList;
   localStorage.setItem('listId', listId);
   let items = JSON.parse(JSON.stringify(basicItems));
+  items.info.listId = listId
+  saveList(state)
   console.log('newList: ', items)
+  return Object.assign({}, state, {
+    listId: listId,
+    items: items
+  });
+}
+
+function openList(state, payload) {
+  saveList(state)
+  const { listId } = payload;
+  const items = state.lists[listId]
+  localStorage.setItem('listId', listId);
   return Object.assign({}, state, {
     listId: listId,
     items: items
@@ -177,6 +193,8 @@ function rootReducer(state = initialState, action) {
     return openItem(state, action.payload)
   } else if (action.type === NEW_LIST) {
     return newList(state)
+  } else if (action.type === OPEN_LIST) {
+    return openList(state, action.payload)
   } else if (action.type === SAVE_LIST) {
     return saveList(state)
   } else if (action.type === EXPORT_LIST) {
