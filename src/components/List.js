@@ -6,7 +6,7 @@ import { saveList, exportList, undoList, redoList } from '../actions/index';
 import FilesModal from './FilesModal';
 
 const mapStateToProps = (state) => {
-  return {items: state.items};
+  return {items: state.items, listId: state.listId};
 };
 
 function mapDispatchToProps(dispatch) {
@@ -59,10 +59,11 @@ class ConnectedList extends Component {
     }
 
     const {items} = this.props;
+    const {listId} = this.props;
     return (
       <GlobalHotKeys keyMap={this.keyMap} handlers={this.handlers}>
         <ul className='itemsArea'>
-          <Layer items={items} itemId={0} key={0}/>
+          <Layer items={items} itemId={0} key={listId}/>
         </ul>
         <FilesModal key={Date.now()} visible={this.state.filesModalVisible}/>
       </GlobalHotKeys >
