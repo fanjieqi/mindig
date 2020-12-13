@@ -1,9 +1,12 @@
-import React, {Component} from 'react';
-import {connect} from 'react-redux';
-import { Form, Input, Checkbox, Button, Typography } from 'antd';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import {
+  Form, Input, Checkbox, Button, Typography,
+} from 'antd';
 import Layout from 'antd/lib/layout/layout';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import MyFooter from './MyFooter';
+
 const { Content } = Layout;
 const { Title } = Typography;
 
@@ -22,13 +25,13 @@ class ConnectedLogin extends Component {
   onFinish(values) {
     console.log('Success:', values);
     this.props.history.push('/workspace');
-  };
+  }
 
   onFinishFailed(errorInfo) {
     console.log('Failed:', errorInfo);
-  };
+  }
 
-  render () {
+  render() {
     return (
       <Layout className="layout">
         <Content className="site-layout login-layout site-layout-background">
@@ -39,13 +42,13 @@ class ConnectedLogin extends Component {
             onFinish={this.onFinish}
             onFinishFailed={this.onFinishFailed}
           >
-            <Title style={{color: '#563d7c', textAlign: 'center'}}>Mindig</Title>
+            <Title style={{ color: '#563d7c', textAlign: 'center' }}>Mindig</Title>
             <Form.Item name="username" rules={[{ required: true, message: 'Please input your username!' }]}>
-              <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username"/>
+              <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" />
             </Form.Item>
 
-            <Form.Item name="password" rules={[{ required: true, message: 'Please input your password!' }]} >
-              <Input.Password prefix={<LockOutlined className="site-form-item-icon" />} placeholder="Password"/>
+            <Form.Item name="password" rules={[{ required: true, message: 'Please input your password!' }]}>
+              <Input.Password prefix={<LockOutlined className="site-form-item-icon" />} placeholder="Password" />
             </Form.Item>
 
             <Form.Item>
@@ -68,9 +71,9 @@ class ConnectedLogin extends Component {
         </Content>
         <MyFooter />
       </Layout>
-    )
+    );
   }
-};
+}
 
 const Login = connect(null, mapDispatchToProps)(ConnectedLogin);
 

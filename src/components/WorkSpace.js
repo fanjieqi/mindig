@@ -4,6 +4,7 @@ import List from './List';
 import MyHeader from './MyHeader';
 import '../App.less';
 import MyFooter from './MyFooter';
+
 const { Content } = Layout;
 
 const WorkSpace = () => (
