@@ -1,3 +1,5 @@
+/* eslint-disable react/prop-types */
+/* eslint-disable react/destructuring-assignment */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { FaPlus, FaMinus } from 'react-icons/fa';
@@ -26,14 +28,9 @@ class ConnectedItem extends Component {
       isClosed: props.isClosed,
       showMinus: props.showMinus,
     };
-    this.handleClick = this.handleClick.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-    this.handleKeyPress = this.handleKeyPress.bind(this);
-    this.handleKeyDown = this.handleKeyDown.bind(this);
-    this.handleBlur = this.handleBlur.bind(this);
   }
 
-  handleClick(event) {
+  handleClick = () => {
     const { itemId, isClosed } = this.state;
     this.setState({ isClosed: !isClosed });
     if (!isClosed) {
@@ -43,11 +40,11 @@ class ConnectedItem extends Component {
     }
   }
 
-  handleChange(event) {
+  handleChange = (event) => {
     this.setState({ title: event.target.value });
   }
 
-  handleKeyPress(event) {
+  handleKeyPress = (event) => {
     if (event.key === 'Enter') {
       event.preventDefault();
       const { itemId, title, parentId } = this.state;
@@ -57,7 +54,7 @@ class ConnectedItem extends Component {
     }
   }
 
-  handleKeyDown(event) {
+  handleKeyDown = (event) => {
     if (event.key === 'Tab') {
       event.preventDefault();
       const { itemId } = this.state;
@@ -72,7 +69,7 @@ class ConnectedItem extends Component {
     }
   }
 
-  handleBlur(event) {
+  handleBlur = (event) => {
     event.preventDefault();
     const { itemId, title } = this.state;
     this.props.saveItem({ title, itemId });

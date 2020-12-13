@@ -1,3 +1,5 @@
+/* eslint-disable react/prop-types */
+/* eslint-disable react/destructuring-assignment */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
@@ -10,24 +12,18 @@ import MyFooter from './MyFooter';
 const { Content } = Layout;
 const { Title, Text } = Typography;
 
-function mapDispatchToProps(dispatch) {
+function mapDispatchToProps() {
   return {
   };
 }
 
 class ConnectedRegistration extends Component {
-  constructor(props) {
-    super(props);
-    this.onFinish = this.onFinish.bind(this);
-    this.onFinishFailed = this.onFinishFailed.bind(this);
-  }
-
-  onFinish(values) {
+  onFinish = (values) => {
     console.log('Success:', values);
     this.props.history.push('/workspace');
   }
 
-  onFinishFailed(errorInfo) {
+  onFinishFailed = (errorInfo) => {
     console.log('Failed:', errorInfo);
   }
 
@@ -79,7 +75,7 @@ class ConnectedRegistration extends Component {
             <Form.Item name="agreement" valuePropName="checked" rules={[{ validator: (_, value) => (value ? Promise.resolve() : Promise.reject('Should accept agreement')) }]}>
               <Checkbox>
                 <Text type="secondary">I have read the </Text>
-                <a href="">agreement</a>
+                <a href="#agreement">agreement</a>
               </Checkbox>
             </Form.Item>
 

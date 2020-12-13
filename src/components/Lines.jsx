@@ -1,3 +1,5 @@
+/* eslint-disable react/prop-types */
+/* eslint-disable react/destructuring-assignment */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
@@ -42,7 +44,7 @@ class Line extends Component {
 
 Line.propTypes = {
   itemId: PropTypes.number.isRequired,
-  items: PropTypes.object.isRequired,
+  items: PropTypes.objectOf(() => true).isRequired,
 };
 
 export default Line;

@@ -1,3 +1,5 @@
+/* eslint-disable react/prop-types */
+/* eslint-disable react/destructuring-assignment */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -26,8 +28,8 @@ class ConnectedLayer extends Component {
     this.getRectsInterval = setInterval(() => {
       if (this.childrenRef === null || this.childrenRef.current === null) return;
       const { height } = this.childrenRef.current.getBoundingClientRect();
-      const { itemId } = this.state;
-      if (height !== this.state.height) {
+      const { itemId, height: oldHeight } = this.state;
+      if (height !== oldHeight) {
         this.setState({ height });
         this.props.setChildrenHeight({ itemId, height });
       }

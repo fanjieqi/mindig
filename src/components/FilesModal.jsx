@@ -1,3 +1,5 @@
+/* eslint-disable react/prop-types */
+/* eslint-disable react/destructuring-assignment */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Modal, Button, List } from 'antd';
@@ -68,8 +70,8 @@ class ConnectedFilesModal extends Component {
             <List.Item
               listId={info.listId}
               key={info.listId}
-              onClick={this.handleClick.bind(this, info.listId)}
-              onDoubleClick={this.handleDoubleClick.bind(this, info.listId)}
+              onClick={() => this.handleClick(info.listId)}
+              onDoubleClick={() => this.handleDoubleClick(info.listId)}
               className={listId === info.listId ? 'active' : null}
             >
               {info.fileName}
@@ -83,6 +85,7 @@ class ConnectedFilesModal extends Component {
 
 ConnectedFilesModal.propTypes = {
   visible: PropTypes.bool.isRequired,
+  lists: PropTypes.objectOf(() => true).isRequired,
 };
 
 const FilesModal = connect(mapStateToProps, mapDispatchToProps)(ConnectedFilesModal);

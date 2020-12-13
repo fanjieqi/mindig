@@ -1,3 +1,5 @@
+/* eslint-disable react/prop-types */
+/* eslint-disable react/destructuring-assignment */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
@@ -10,7 +12,7 @@ import MyFooter from './MyFooter';
 const { Content } = Layout;
 const { Title } = Typography;
 
-function mapDispatchToProps(dispatch) {
+function mapDispatchToProps() {
   return {
   };
 }
@@ -56,7 +58,7 @@ class ConnectedLogin extends Component {
                 <Checkbox>Remember me</Checkbox>
               </Form.Item>
 
-              <a className="login-form-forgot" href="">
+              <a className="login-form-forgot" href="#forget_password">
                 Forgot password
               </a>
             </Form.Item>
@@ -65,7 +67,7 @@ class ConnectedLogin extends Component {
               <Button type="primary" htmlType="submit" className="login-form-button">
                 Log in
               </Button>
-              <a href="">register now!</a>
+              <a href="#registration">register now!</a>
             </Form.Item>
           </Form>
         </Content>
