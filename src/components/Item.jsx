@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { FaPlus, FaMinus } from 'react-icons/fa';
+import PropTypes from 'prop-types';
 import {
   addItem, saveItem, closeItem, openItem, deleteItem,
 } from '../actions/index';
@@ -24,7 +25,6 @@ class ConnectedItem extends Component {
       parentId: props.parentId,
       isClosed: props.isClosed,
       showMinus: props.showMinus,
-      keysPress: {},
     };
     this.handleClick = this.handleClick.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -95,6 +95,14 @@ class ConnectedItem extends Component {
     );
   }
 }
+
+ConnectedItem.propTypes = {
+  title: PropTypes.string.isRequired,
+  itemId: PropTypes.number.isRequired,
+  parentId: PropTypes.number.isRequired,
+  isClosed: PropTypes.bool.isRequired,
+  showMinus: PropTypes.bool.isRequired,
+};
 
 const Item = connect(
   null,

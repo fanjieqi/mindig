@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 const _ = require('lodash');
 
@@ -38,5 +39,10 @@ class Line extends Component {
     return (null);
   }
 }
+
+Line.propTypes = {
+  itemId: PropTypes.number.isRequired,
+  items: PropTypes.object.isRequired,
+};
 
 export default Line;

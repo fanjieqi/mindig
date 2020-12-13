@@ -60,12 +60,14 @@ class ConnectedList extends Component {
 
     const { items } = this.props;
     const { listId } = this.props;
+    const { lists } = this.props;
+    const { filesModalVisible } = this.state;
     return (
       <GlobalHotKeys keyMap={this.keyMap} handlers={this.handlers}>
         <ul className="itemsArea">
           <Layer items={items} itemId={0} key={listId} />
         </ul>
-        <FilesModal key={Date.now()} visible={this.state.filesModalVisible} />
+        <FilesModal key={Date.now()} visible={filesModalVisible} lists={lists} />
       </GlobalHotKeys>
     );
   }

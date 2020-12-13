@@ -22,12 +22,12 @@ class ConnectedLogin extends Component {
     this.onFinishFailed = this.onFinishFailed.bind(this);
   }
 
-  onFinish(values) {
+  onFinish = (values) => {
     console.log('Success:', values);
     this.props.history.push('/workspace');
   }
 
-  onFinishFailed(errorInfo) {
+  onFinishFailed = (errorInfo) => {
     console.log('Failed:', errorInfo);
   }
 

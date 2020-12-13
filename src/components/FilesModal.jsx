@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Modal, Button, List } from 'antd';
-import { purple } from '@ant-design/colors';
+import PropTypes from 'prop-types';
 import { openList } from '../actions/index';
 
 const _ = require('lodash');
@@ -26,7 +26,8 @@ class ConnectedFilesModal extends Component {
 
   handleOk = () => {
     this.setState({ loading: true });
-    this.props.openList({ listId: this.state.listId });
+    const { listId } = this.state;
+    this.props.openList({ listId });
     this.setState({ visible: false });
   };
 
@@ -54,6 +55,7 @@ class ConnectedFilesModal extends Component {
       </Button>,
     ];
     const { lists } = this.props;
+    const { listId } = this.state;
     const infos = _.map(Object.keys(lists), (key) => lists[key].info);
     return (
       <Modal visible={visible} title="Open File" onOk={this.handleOk} onCancel={this.handleCancel} footer={modalFooter}>
@@ -68,7 +70,7 @@ class ConnectedFilesModal extends Component {
               key={info.listId}
               onClick={this.handleClick.bind(this, info.listId)}
               onDoubleClick={this.handleDoubleClick.bind(this, info.listId)}
-              className={this.state.listId === info.listId ? 'active' : null}
+              className={listId === info.listId ? 'active' : null}
             >
               {info.fileName}
             </List.Item>
@@ -78,6 +80,10 @@ class ConnectedFilesModal extends Component {
     );
   }
 }
+
+ConnectedFilesModal.propTypes = {
+  visible: PropTypes.bool.isRequired,
+};
 
 const FilesModal = connect(mapStateToProps, mapDispatchToProps)(ConnectedFilesModal);
 

@@ -1,5 +1,6 @@
 import {
-  ADD_ITEM, SAVE_ITEM, CLOSE_ITEM, OPEN_ITEM, SAVE_LIST, DELETE_ITEM, SET_CHILDREN_HEIGHT, NEW_LIST, OPEN_LIST, EXPORT_LIST, UNDO_LIST, REDO_LIST,
+  ADD_ITEM, SAVE_ITEM, CLOSE_ITEM, OPEN_ITEM, SAVE_LIST, DELETE_ITEM, SET_CHILDREN_HEIGHT,
+  NEW_LIST, OPEN_LIST, EXPORT_LIST, UNDO_LIST, REDO_LIST,
 } from '../constants/action-types';
 import exportListToMarkdownByDfs from '../utils/exportListToMarkdownByDfs';
 
@@ -12,18 +13,18 @@ const basicItems = {
   },
   info: { fileName: 'Root', listId: 0 },
 };
-const lists = JSON.parse(localStorage.getItem('lists')) || {};
-const listId = parseInt(localStorage.getItem('listId')) || 0;
-const items = JSON.parse(JSON.stringify((lists && lists[listId]) || basicItems));
+const initLists = JSON.parse(localStorage.getItem('lists')) || {};
+const initListId = parseInt(localStorage.getItem('listId'), 10) || 0;
+const initItems = JSON.parse(JSON.stringify((initLists && initLists[initListId]) || basicItems));
 
 const initialState = {
-  lists,
-  listId,
-  items,
+  lists: initLists,
+  listId: initListId,
+  items: initItems,
 };
 
-let totalList = _.max(_.map(Object.keys(lists), (key) => parseInt(key))) || 0;
-let totalItem = _.max(_.map(Object.keys(items), (key) => parseInt(key))) || 0;
+let totalList = _.max(_.map(Object.keys(initLists), (key) => parseInt(key, 10))) || 0;
+let totalItem = _.max(_.map(Object.keys(initItems), (key) => parseInt(key, 10))) || 0;
 const histories = {};
 const historyIds = {};
 
@@ -62,7 +63,7 @@ function saveItem(state, payload) {
   const { itemId, title } = payload;
   if (title !== items[itemId].title) saveHistory(state);
   items[itemId].title = title;
-  if (itemId == 0) {
+  if (itemId === 0) {
     items.info.fileName = title;
   }
   return { ...state, items };
@@ -80,6 +81,17 @@ function openItem(state, payload) {
   const { itemId } = payload;
   items[itemId].isClosed = false;
   return { ...state, items };
+}
+
+function saveList(state) {
+  const { items, lists } = { ...state };
+  lists[state.listId] = items;
+  localStorage.setItem('lists', JSON.stringify(lists));
+  return {
+    ...state,
+    lists,
+    items,
+  };
 }
 
 function newList(state) {
@@ -111,18 +123,6 @@ function openList(state, payload) {
   };
 }
 
-function saveList(state) {
-  const items = { ...state.items };
-  const lists = { ...state.lists };
-  lists[state.listId] = items;
-  localStorage.setItem('lists', JSON.stringify(lists));
-  return {
-    ...state,
-    lists,
-    items,
-  };
-}
-
 function exportList(state) {
   const items = { ...state.items };
   const result = exportListToMarkdownByDfs(items);
@@ -150,7 +150,8 @@ function redoList(state) {
   const { listId } = state;
   console.log('redoList ', historyIds[listId]);
   historyIds[listId] += 1;
-  if (!listId || !historyIds[listId] || !histories[listId] || !histories[listId][historyIds[listId]]) {
+  if (!listId || !historyIds[listId] || !histories[listId]
+    || !histories[listId][historyIds[listId]]) {
     historyIds[listId] -= 1;
     return state;
   }
@@ -179,30 +180,30 @@ function setChildrenHeight(state, payload) {
 
 function rootReducer(state = initialState, action) {
   if (action.type === ADD_ITEM) {
-    return addItem(state, action.payload)
+    return addItem(state, action.payload);
   } if (action.type === SAVE_ITEM) {
-    return saveItem(state, action.payload)
+    return saveItem(state, action.payload);
   } if (action.type === CLOSE_ITEM) {
-    return closeItem(state, action.payload)
+    return closeItem(state, action.payload);
   } if (action.type === OPEN_ITEM) {
-    return openItem(state, action.payload)
+    return openItem(state, action.payload);
   } if (action.type === NEW_LIST) {
-    return newList(state)
+    return newList(state);
   } if (action.type === OPEN_LIST) {
-    return openList(state, action.payload)
+    return openList(state, action.payload);
   } if (action.type === SAVE_LIST) {
-    return saveList(state)
+    return saveList(state);
   } if (action.type === EXPORT_LIST) {
-    return exportList(state)
+    return exportList(state);
   } if (action.type === UNDO_LIST) {
-    return undoList(state)
+    return undoList(state);
   } if (action.type === REDO_LIST) {
-    return redoList(state)
+    return redoList(state);
   } if (action.type === DELETE_ITEM) {
-    return deleteItem(state, action.payload)
-  } else if (action.type === SET_CHILDREN_HEIGHT) {
-    return setChildrenHeight(state, action.payload)
-  } 
+    return deleteItem(state, action.payload);
+  } if (action.type === SET_CHILDREN_HEIGHT) {
+    return setChildrenHeight(state, action.payload);
+  }
 
   return state;
 }

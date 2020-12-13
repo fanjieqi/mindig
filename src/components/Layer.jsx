@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import Item from './Item';
 import Lines from './Lines';
 import { setChildrenHeight } from '../actions/index';
+
+const _ = require('lodash');
 
 function mapDispatchToProps(dispatch) {
   return {
@@ -21,7 +24,7 @@ class ConnectedLayer extends Component {
 
   componentDidMount() {
     this.getRectsInterval = setInterval(() => {
-      if (this.childrenRef == null || this.childrenRef.current == null) return;
+      if (this.childrenRef === null || this.childrenRef.current === null) return;
       const { height } = this.childrenRef.current.getBoundingClientRect();
       const { itemId } = this.state;
       if (height !== this.state.height) {
@@ -41,12 +44,17 @@ class ConnectedLayer extends Component {
     return (
       <li className={`layer item${itemId}`} key={`printItem${itemId}`}>
         <div>
-          <Item itemId={itemId} title={items[itemId].title} parentId={items[itemId].parentId} showMinus={items[itemId].showMinus} />
+          <Item
+            itemId={itemId}
+            title={items[itemId].title}
+            parentId={items[itemId].parentId}
+            showMinus={items[itemId].showMinus}
+          />
         </div>
         <Lines items={items} itemId={itemId} />
         <div className={`childrenLayer ${items[itemId].isClosed ? 'closed' : 'opened'}`} key={`childrenLayer${itemId}`} ref={this.childrenRef}>
           <ul>
-            {items[itemId].children.map((childId) => (
+            {_.map(items[itemId].children, (childId) => (
               <Layer items={items} itemId={childId} parentId={itemId} key={childId} />
             ))}
           </ul>
@@ -55,6 +63,10 @@ class ConnectedLayer extends Component {
     );
   }
 }
+
+ConnectedLayer.propTypes = {
+  itemId: PropTypes.number.isRequired,
+};
 
 const Layer = connect(null, mapDispatchToProps)(ConnectedLayer);
 

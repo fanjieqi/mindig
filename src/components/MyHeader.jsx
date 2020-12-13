@@ -4,7 +4,8 @@ import {
   Layout, Menu, Divider, Typography, Avatar, Badge,
 } from 'antd';
 import {
-  FileOutlined, EditOutlined, QuestionCircleOutlined, BellOutlined, UserOutlined, SettingOutlined, LogoutOutlined,
+  FileOutlined, EditOutlined, QuestionCircleOutlined, BellOutlined, UserOutlined, SettingOutlined,
+  LogoutOutlined,
 } from '@ant-design/icons';
 import {
   newList, saveList, exportList, undoList, redoList,
@@ -70,13 +71,15 @@ class ConnectedHeader extends Component {
       </span>
     );
 
+    const { filesModalVisible } = this.state;
+
     return (
       <Header style={{
         position: 'fixed', zIndex: 1, width: '100%', background: '#fff',
       }}
       >
         <div className="logo">Mindig</div>
-        <FilesModal key={Date.now()} visible={this.state.filesModalVisible} />
+        <FilesModal key={Date.now()} visible={filesModalVisible} />
         <Menu theme="light" mode="horizontal" defaultSelectedKeys={['2']} onSelect={this.handleSelect} onBlur={this.handleBlur} selectedKeys={[this.state.selectedKeys]}>
           <SubMenu key="SubMenu1" title="File" icon={<FileOutlined />}>
             <Menu.Item key="fileMenu:newList" style={{ minWidth: '200px' }}>
