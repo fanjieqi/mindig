@@ -74,6 +74,7 @@ class ConnectedHeader extends Component {
     );
 
     const { filesModalVisible } = this.state;
+    const ctrlKey = /(Mac)/i.test(navigator.platform) ? 'Cmd' : 'Ctrl';
 
     return (
       <Header style={{
@@ -86,21 +87,29 @@ class ConnectedHeader extends Component {
           <SubMenu key="SubMenu1" title="File" icon={<FileOutlined />}>
             <Menu.Item key="fileMenu:newList" style={{ minWidth: '200px' }}>
               <Text>New File</Text>
-              <Text type="secondary" className="fileMenuShortCut">Ctrl+N</Text>
+              <Text type="secondary" className="fileMenuShortCut">
+                {`${ctrlKey}+N`}
+              </Text>
             </Menu.Item>
             <Divider style={{ margin: 0 }} />
             <Menu.Item key="fileMenu:showFilesModal">
               <Text>Open File</Text>
-              <Text type="secondary" className="fileMenuShortCut">Ctrl+O</Text>
+              <Text type="secondary" className="fileMenuShortCut">
+                {`${ctrlKey}+O`}
+              </Text>
             </Menu.Item>
             <Divider style={{ margin: 0 }} />
             <Menu.Item key="fileMenu:saveList">
               <Text>Save</Text>
-              <Text type="secondary" className="fileMenuShortCut">Ctrl+S</Text>
+              <Text type="secondary" className="fileMenuShortCut">
+                {`${ctrlKey}+S`}
+              </Text>
             </Menu.Item>
             <Menu.Item key="fileMenu:exportList">
               <Text>Save as</Text>
-              <Text type="secondary" className="fileMenuShortCut">Ctrl+Shift+S</Text>
+              <Text type="secondary" className="fileMenuShortCut">
+                {`${ctrlKey}+Shift+S`}
+              </Text>
             </Menu.Item>
             <Divider style={{ margin: 0 }} />
             <Menu.Item key="fileMenu:5">Preferences</Menu.Item>
@@ -109,33 +118,47 @@ class ConnectedHeader extends Component {
           <SubMenu key="SubMenu2" title="Edit" icon={<EditOutlined />}>
             <Menu.Item key="editMenu:undoList" style={{ minWidth: '200px' }}>
               <Text>Undo</Text>
-              <Text type="secondary" className="fileMenuShortCut">Ctrl+Z</Text>
+              <Text type="secondary" className="fileMenuShortCut">
+                {`${ctrlKey}+Z`}
+              </Text>
             </Menu.Item>
             <Menu.Item key="editMenu:redoList">
               <Text>Redo</Text>
-              <Text type="secondary" className="fileMenuShortCut">Ctrl+Y</Text>
+              <Text type="secondary" className="fileMenuShortCut">
+                {`${ctrlKey}+Y`}
+              </Text>
             </Menu.Item>
             <Divider style={{ margin: 0 }} />
             <Menu.Item key="editMenu:3">
               <Text>Cut</Text>
-              <Text type="secondary" className="fileMenuShortCut">Ctrl+X</Text>
+              <Text type="secondary" className="fileMenuShortCut">
+                {`${ctrlKey}+X`}
+              </Text>
             </Menu.Item>
             <Menu.Item key="editMenu:4">
               <Text>Copy</Text>
-              <Text type="secondary" className="fileMenuShortCut">Ctrl+C</Text>
+              <Text type="secondary" className="fileMenuShortCut">
+                {`${ctrlKey}+C`}
+              </Text>
             </Menu.Item>
             <Menu.Item key="editMenu:5">
               <Text>Paste</Text>
-              <Text type="secondary" className="fileMenuShortCut">Ctrl+Y</Text>
+              <Text type="secondary" className="fileMenuShortCut">
+                {`${ctrlKey}+Y`}
+              </Text>
             </Menu.Item>
             <Divider style={{ margin: 0 }} />
             <Menu.Item key="editMenu:6">
               <Text>Find</Text>
-              <Text type="secondary" className="fileMenuShortCut">Ctrl+F</Text>
+              <Text type="secondary" className="fileMenuShortCut">
+                {`${ctrlKey}+F`}
+              </Text>
             </Menu.Item>
             <Menu.Item key="editMenu:7">
               <Text>Replace</Text>
-              <Text type="secondary" className="fileMenuShortCut">Ctrl+H</Text>
+              <Text type="secondary" className="fileMenuShortCut">
+                {`${ctrlKey}+H`}
+              </Text>
             </Menu.Item>
           </SubMenu>
 

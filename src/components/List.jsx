@@ -29,12 +29,13 @@ class ConnectedList extends Component {
   }
 
   render() {
+    const ctrlKey = /(Mac)/i.test(navigator.platform) ? 'cmd' : 'ctrl';
     this.keyMap = {
-      SAVE_LIST: 'ctrl+s',
-      EXPORT_LIST: 'ctrl+shift+s',
-      UNDO_LIST: 'ctrl+z',
-      REDO_LIST: 'ctrl+y',
-      SHOW_FILES_MODAL: 'ctrl+o',
+      SAVE_LIST: `${ctrlKey}+s`,
+      EXPORT_LIST: `${ctrlKey}+shift+s`,
+      UNDO_LIST: `${ctrlKey}+z`,
+      REDO_LIST: `${ctrlKey}+y`,
+      SHOW_FILES_MODAL: `${ctrlKey}+o`,
     };
 
     this.handlers = {
