@@ -2,7 +2,7 @@
 /* eslint-disable react/destructuring-assignment */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { FaPlus, FaMinus } from 'react-icons/fa';
+import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 import PropTypes from 'prop-types';
 import {
   addItem, saveItem, closeItem, openItem, deleteItem,
@@ -79,7 +79,7 @@ class ConnectedItem extends Component {
     const { title, isClosed, showMinus } = this.state;
     return (
       <div className="item">
-        { isClosed ? <FaPlus className="iconPlus" onClick={this.handleClick} /> : <FaMinus className={showMinus ? 'iconMinus' : 'iconMinus visibleHidden'} onClick={this.handleClick} /> }
+        { isClosed ? <PlusOutlined className="iconPlus" onClick={this.handleClick} /> : <MinusOutlined className={showMinus ? 'iconMinus' : 'iconMinus visibleHidden'} onClick={this.handleClick} /> }
         <input
           type="text"
           value={title}
