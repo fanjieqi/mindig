@@ -50,7 +50,8 @@ class ConnectedLayer extends Component {
             itemId={itemId}
             title={items[itemId].title}
             parentId={items[itemId].parentId}
-            showMinus={items[itemId].showMinus}
+            isClosed={items[itemId].isClosed}
+            showMinus={items[itemId].children.length > 1}
           />
         </div>
         <Lines items={items} itemId={itemId} />
