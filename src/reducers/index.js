@@ -51,7 +51,7 @@ function addItem(state, payload) {
   const parent = items[item.parentId];
   if (item.beforeId) {
     const index = parent.children.findIndex((itemId) => itemId === item.beforeId);
-    parent.children.splice(index, 0, item.itemId);
+    parent.children.splice(index + 1, 0, item.itemId);
   } else {
     parent.children = parent.children.concat(item.itemId);
   }

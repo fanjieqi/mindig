@@ -47,10 +47,8 @@ class ConnectedItem extends Component {
   handleKeyPress = (event) => {
     if (event.key === 'Enter') {
       event.preventDefault();
-      const { itemId, title, parentId } = this.state;
-      this.props.addItem({ parentId, beforeId: itemId, title });
-      this.setState({ title: '' });
-      this.props.saveItem({ itemId, title: '' });
+      const { itemId, parentId } = this.state;
+      this.props.addItem({ parentId, beforeId: itemId });
     }
   }
 
@@ -83,6 +81,7 @@ class ConnectedItem extends Component {
         <input
           type="text"
           value={title}
+          ref={(input) => input && input.focus()}
           onChange={this.handleChange}
           onKeyPress={this.handleKeyPress}
           onKeyDown={this.handleKeyDown}
