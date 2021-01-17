@@ -67,9 +67,7 @@ class ConnectedList extends Component {
     const { filesModalVisible } = this.state;
     return (
       <GlobalHotKeys keyMap={this.keyMap} handlers={this.handlers}>
-        <ul className="itemsArea">
-          <Layer items={items} itemId={0} key={listId} />
-        </ul>
+        <Layer items={items} itemId={0} key={listId} />
         <FilesModal key={Date.now()} visible={filesModalVisible} lists={lists} />
       </GlobalHotKeys>
     );

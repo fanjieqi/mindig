@@ -21,13 +21,15 @@ class ConnectedLayer extends Component {
     this.state = {
       itemId: props.itemId,
     };
-    this.childrenRef = React.createRef();
   }
 
   componentDidMount() {
     this.getRectsInterval = setInterval(() => {
-      if (this.childrenRef === null || this.childrenRef.current === null) return;
-      const { height } = this.childrenRef.current.getBoundingClientRect();
+      if (this.currentElement == null) return;
+      if (this.childrenElement == null) return;
+      const currentHeight = this.currentElement.clientHeight;
+      const childrenHeight = this.childrenElement.clientHeight;
+      const height = currentHeight > childrenHeight ? currentHeight : childrenHeight;
       const { itemId, height: oldHeight } = this.state;
       if (height !== oldHeight) {
         this.setState({ height });
@@ -44,8 +46,8 @@ class ConnectedLayer extends Component {
     const { itemId } = this.state;
     const { items } = this.props;
     return (
-      <li className={`layer item${itemId}`} key={`printItem${itemId}`}>
-        <div>
+      <div className={`layer item${itemId}`} key={`printItem${itemId}`} ref={(currentElement) => { this.currentElement = currentElement; }}>
+        <div className="currentLayer">
           <Item
             itemId={itemId}
             title={items[itemId].title}
@@ -55,14 +57,12 @@ class ConnectedLayer extends Component {
           />
         </div>
         <Lines items={items} itemId={itemId} />
-        <div className={`childrenLayer ${items[itemId].isClosed ? 'closed' : 'opened'}`} key={`childrenLayer${itemId}`} ref={this.childrenRef}>
-          <ul>
-            {_.map(items[itemId].children, (childId) => (
-              <Layer items={items} itemId={childId} parentId={itemId} key={childId} />
-            ))}
-          </ul>
+        <div className={`childrenLayer ${items[itemId].isClosed ? 'closed' : 'opened'}`} key={`childrenLayer${itemId}`} ref={(childrenElement) => { this.childrenElement = childrenElement; }}>
+          {_.map(items[itemId].children, (childId) => (
+            <Layer items={items} itemId={childId} parentId={itemId} key={childId} />
+          ))}
         </div>
-      </li>
+      </div>
     );
   }
 }

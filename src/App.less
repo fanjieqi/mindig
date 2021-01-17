@@ -1,19 +1,36 @@
 @import '~antd/dist/antd.less';
 @import '~antd/lib/style/themes/default.less';
 
-li.layer {
+.layer {
   display: flex;
+  flex-direction: row;
+}
+
+.layer > div {
+  flex-direction: column;
+  display: flex;
+  min-height: 0rem;
 }
 
 .item {
+  display: flex;
+}
+
+.verticalMiddle {
   position: relative;
   top: 50%;
   transform: translateY(-50%);
-  width: max-content;
 }
 
-.iconPlus, .iconMinus {
-  vertical-align: middle;
+.iconWrapper {
+  display: inline-block;
+  line-height: 100%;
+}
+
+.itemContent {
+  border: none;
+  resize: none;
+  overflow: hidden;
 }
 
 .iconPlus {
@@ -22,10 +39,6 @@ li.layer {
 
 .iconMinus {
   color: @red-6;
-}
-
-.childrenLayer {
-  height: fit-content; 
 }
 
 .childrenLayer.closed {
@@ -60,7 +73,8 @@ ul li.layer:last-child {
 }
 
 .connectLine svg {
-  height: inherit;
+  height: 100%;
+  width: 100%;
 }
 
 .workspace-layout {

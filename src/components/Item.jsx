@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 import PropTypes from 'prop-types';
+import TextareaAutosize from 'react-textarea-autosize';
 import {
   addItem, saveItem, closeItem, openItem, deleteItem,
 } from '../actions/index';
@@ -76,10 +77,10 @@ class ConnectedItem extends Component {
   render() {
     const { title, isClosed, showMinus } = this.state;
     return (
-      <div className="item">
-        { isClosed ? <PlusOutlined className="iconPlus" onClick={this.handleClick} /> : <MinusOutlined className={showMinus ? 'iconMinus' : 'iconMinus visibleHidden'} onClick={this.handleClick} /> }
-        <input
-          type="text"
+      <div className="item verticalMiddle">
+        <div className="iconWrapper">{ isClosed ? <PlusOutlined className="iconPlus verticalMiddle" onClick={this.handleClick} /> : <MinusOutlined className={showMinus ? 'iconMinus verticalMiddle' : 'iconMinus verticalMiddle visibleHidden'} onClick={this.handleClick} /> }</div>
+        <TextareaAutosize
+          className="itemContent"
           value={title}
           ref={(input) => input && input.focus()}
           onChange={this.handleChange}
