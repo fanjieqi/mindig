@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 import PropTypes from 'prop-types';
-import TextareaAutosize from 'react-textarea-autosize';
+import ContentEditable from 'react-contenteditable';
 import {
   addItem, saveItem, closeItem, openItem, deleteItem,
 } from '../actions/index';
@@ -29,6 +29,7 @@ class ConnectedItem extends Component {
       isClosed: props.isClosed,
       showMinus: props.showMinus,
     };
+    this.contentEditable = React.createRef();
   }
 
   handleClick = () => {
@@ -79,10 +80,10 @@ class ConnectedItem extends Component {
     return (
       <div className="item verticalMiddle">
         <div className="iconWrapper">{ isClosed ? <PlusOutlined className="iconPlus verticalMiddle" onClick={this.handleClick} /> : <MinusOutlined className={showMinus ? 'iconMinus verticalMiddle' : 'iconMinus verticalMiddle visibleHidden'} onClick={this.handleClick} /> }</div>
-        <TextareaAutosize
+        <ContentEditable
           className="itemContent"
-          value={title}
-          ref={(input) => input && input.focus()}
+          html={title}
+          innerRef={(input) => input && input.focus()}
           onChange={this.handleChange}
           onKeyPress={this.handleKeyPress}
           onKeyDown={this.handleKeyDown}
