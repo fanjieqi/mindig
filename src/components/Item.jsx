@@ -83,7 +83,6 @@ class ConnectedItem extends Component {
         <ContentEditable
           className="itemContent"
           html={title}
-          innerRef={(input) => input && input.focus()}
           onChange={this.handleChange}
           onKeyPress={this.handleKeyPress}
           onKeyDown={this.handleKeyDown}
