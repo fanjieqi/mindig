@@ -80,7 +80,6 @@ class ConnectedItem extends Component {
     const { title, isClosed, showMinus } = this.state;
     return (
       <div className="item verticalMiddle">
-        <div className="iconWrapper">{ isClosed ? <PlusOutlined className="iconPlus verticalMiddle" onClick={this.handleClick} /> : <MinusOutlined className={showMinus ? 'iconMinus verticalMiddle' : 'iconMinus verticalMiddle visibleHidden'} onClick={this.handleClick} /> }</div>
         <ContentEditable
           className="itemContent"
           html={title}
@@ -89,6 +88,7 @@ class ConnectedItem extends Component {
           onKeyDown={this.handleKeyDown}
           onBlur={this.handleBlur}
         />
+        <div className="iconWrapper">{ isClosed ? <PlusOutlined className="iconPlus verticalMiddle" onClick={this.handleClick} /> : <MinusOutlined className={showMinus ? 'iconMinus verticalMiddle' : 'iconMinus verticalMiddle visibleHidden'} onClick={this.handleClick} /> }</div>
       </div>
     );
   }
