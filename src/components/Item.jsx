@@ -62,7 +62,8 @@ class ConnectedItem extends Component {
       this.props.openItem({ itemId });
       this.props.addItem({ parentId: itemId });
     } else if (event.key === 'Backspace') {
-      if (event.target.value === undefined || event.target.value === '') {
+      const { title } = this.state;
+      if (title === '') {
         const { itemId } = this.state;
         this.props.deleteItem({ itemId });
       }
