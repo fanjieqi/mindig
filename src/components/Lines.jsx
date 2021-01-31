@@ -23,7 +23,7 @@ class Line extends Component {
     let offset = 0;
     if (items[itemId].children.length && !items[itemId].isClosed) {
       return (
-        <div className="connectLine" style={{ width: `${WIDTH}px` }}>
+        <div className="connectLine" style={{ minWidth: `${WIDTH}px` }}>
           <svg>
             {_.map(items[itemId].children, (childId) => {
               let childrenHeight = items[childId].height;
