@@ -26,6 +26,7 @@ class Line extends Component {
         <div className="connectLine">
           <svg>
             {_.map(items[itemId].children, (childId) => {
+              if (items[childId] === undefined) return null;
               let childrenHeight = items[childId].height;
               childrenHeight = InputHeight > childrenHeight ? InputHeight : childrenHeight;
               offset += childrenHeight;

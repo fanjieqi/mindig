@@ -26,10 +26,7 @@ class ConnectedLayer extends Component {
   componentDidMount() {
     this.getRectsInterval = setInterval(() => {
       if (this.currentElement == null) return;
-      if (this.childrenElement == null) return;
-      const currentHeight = this.currentElement.clientHeight;
-      const childrenHeight = this.childrenElement.clientHeight;
-      const height = currentHeight > childrenHeight ? currentHeight : childrenHeight;
+      const height = this.currentElement.clientHeight;
       const { itemId, height: oldHeight } = this.state;
       if (height !== oldHeight) {
         this.setState({ height });
@@ -45,8 +42,9 @@ class ConnectedLayer extends Component {
   render() {
     const { itemId } = this.state;
     const { items } = this.props;
+    if (items[itemId] === undefined) return null;
     return (
-      <div className={`layer item${itemId}`} key={`printItem${itemId}`} ref={(currentElement) => { this.currentElement = currentElement; }}>
+      <div className="layer" key={`layer${itemId}`} ref={(currentElement) => { this.currentElement = currentElement; }}>
         <div className="currentLayer">
           <Item
             itemId={itemId}
@@ -57,7 +55,7 @@ class ConnectedLayer extends Component {
           />
         </div>
         <Lines items={items} itemId={itemId} />
-        <div className={`childrenLayer ${items[itemId].isClosed ? 'closed' : 'opened'}`} key={`childrenLayer${itemId}`} ref={(childrenElement) => { this.childrenElement = childrenElement; }}>
+        <div className={`childrenLayer ${items[itemId].isClosed ? 'closed' : 'opened'}`} key={`childrenLayer${itemId}`}>
           {!items[itemId].isClosed && _.map(items[itemId].children, (childId) => (
             <Layer items={items} itemId={childId} parentId={itemId} key={childId} />
           ))}
