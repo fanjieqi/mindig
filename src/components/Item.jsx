@@ -32,6 +32,10 @@ class ConnectedItem extends Component {
     this.contentEditable = React.createRef();
   }
 
+  componentDidMount() {
+    this.contentEditable.current.focus();
+  }
+
   handleClick = () => {
     const { itemId, isClosed } = this.state;
     this.setState({ isClosed: !isClosed });
@@ -83,6 +87,7 @@ class ConnectedItem extends Component {
         <ContentEditable
           className="itemContent"
           html={title}
+          innerRef={this.contentEditable}
           onChange={this.handleChange}
           onKeyPress={this.handleKeyPress}
           onKeyDown={this.handleKeyDown}
