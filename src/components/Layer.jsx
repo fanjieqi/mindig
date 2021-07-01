@@ -42,7 +42,7 @@ class ConnectedLayer extends Component {
   render() {
     const { itemId } = this.state;
     const { items } = this.props;
-    if (items[itemId] === undefined) return null;
+    if (items === null || items[itemId] === undefined) return null;
     return (
       <div className="layer" key={`layer${itemId}`} ref={(currentElement) => { this.currentElement = currentElement; }}>
         <div className="currentLayer">
@@ -51,7 +51,7 @@ class ConnectedLayer extends Component {
             title={items[itemId].title}
             parentId={items[itemId].parentId}
             isClosed={items[itemId].isClosed}
-            showMinus={items[itemId].children.length > 1}
+            showMinus={items[itemId].children && items[itemId].children.length > 1}
           />
         </div>
         <Lines items={items} itemId={itemId} />

@@ -11,3 +11,6 @@ export const OPEN_LIST = 'OPEN_LIST';
 export const EXPORT_LIST = 'EXPORT_LIST';
 export const UNDO_LIST = 'UNDO_LIST';
 export const REDO_LIST = 'REDO_LIST';
+export const SAVE_FILES = 'SAVE_FILES';
+export const ADD_FILE = 'ADD_FILE';
+export const DELETE_FILE = 'DELETE_FILE';

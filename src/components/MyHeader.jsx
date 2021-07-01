@@ -12,7 +12,7 @@ import {
 import {
   newList, saveList, exportList, undoList, redoList,
 } from '../actions/index';
-import FilesModal from './FilesModal';
+import FilesTree from './FilesTree';
 
 const { Header } = Layout;
 const { SubMenu } = Menu;
@@ -32,7 +32,7 @@ class ConnectedHeader extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      filesModalVisible: false,
+      filesTreeVisible: false,
       selectedKeys: [],
     };
   }
@@ -44,8 +44,8 @@ class ConnectedHeader extends Component {
   handleSelect = (event) => {
     if (event.key === 'fileMenu:newList') {
       this.props.newList();
-    } else if (event.key === 'fileMenu:showFilesModal') {
-      this.setState({ filesModalVisible: true });
+    } else if (event.key === 'fileMenu:showFilesTree') {
+      this.setState({ filesTreeVisible: true });
     } else if (event.key === 'fileMenu:saveList') {
       this.props.saveList();
     } else if (event.key === 'fileMenu:exportList') {
@@ -73,7 +73,7 @@ class ConnectedHeader extends Component {
       </span>
     );
 
-    const { filesModalVisible } = this.state;
+    const { filesTreeVisible } = this.state;
     const ctrlKey = /(Mac)/i.test(navigator.platform) ? 'Cmd' : 'Ctrl';
 
     return (
@@ -82,7 +82,7 @@ class ConnectedHeader extends Component {
       }}
       >
         <div className="logo">Mindig</div>
-        <FilesModal key={Date.now()} visible={filesModalVisible} />
+        <FilesTree key={`FilesTree-${Date.now()}`} visible={filesTreeVisible} />
         <Menu theme="light" mode="horizontal" defaultSelectedKeys={['2']} onSelect={this.handleSelect} onBlur={this.handleBlur} selectedKeys={[this.state.selectedKeys]}>
           <SubMenu key="SubMenu1" title="File" icon={<FileOutlined />}>
             <Menu.Item key="fileMenu:newList" style={{ minWidth: '200px' }}>
@@ -92,7 +92,7 @@ class ConnectedHeader extends Component {
               </Text>
             </Menu.Item>
             <Divider style={{ margin: 0 }} />
-            <Menu.Item key="fileMenu:showFilesModal">
+            <Menu.Item key="fileMenu:showFilesTree">
               <Text>Open File</Text>
               <Text type="secondary" className="fileMenuShortCut">
                 {`${ctrlKey}+O`}

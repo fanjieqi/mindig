@@ -21,7 +21,7 @@ class Line extends Component {
     const { items } = this.props;
     const { height } = items[itemId];
     let offset = 0;
-    if (items[itemId].children.length && !items[itemId].isClosed) {
+    if (items[itemId].children && items[itemId].children.length && !items[itemId].isClosed) {
       return (
         <div className="connectLine">
           <svg>

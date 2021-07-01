@@ -7,7 +7,7 @@ import Layer from './Layer';
 import {
   saveList, exportList, undoList, redoList,
 } from '../actions/index';
-import FilesModal from './FilesModal';
+import FilesTree from './FilesTree';
 
 const mapStateToProps = (state) => ({ items: state.items, listId: state.listId });
 
@@ -24,7 +24,7 @@ class ConnectedList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      filesModalVisible: false,
+      filesTreeVisible: false,
     };
   }
 
@@ -57,18 +57,17 @@ class ConnectedList extends Component {
       },
       SHOW_FILES_MODAL: (event) => {
         event.preventDefault();
-        this.setState({ filesModalVisible: true });
+        this.setState({ filesTreeVisible: true });
       },
     };
 
     const { items } = this.props;
     const { listId } = this.props;
-    const { lists } = this.props;
-    const { filesModalVisible } = this.state;
+    const { filesTreeVisible } = this.state;
     return (
       <GlobalHotKeys keyMap={this.keyMap} handlers={this.handlers}>
         <Layer items={items} itemId={0} key={listId} />
-        <FilesModal key={Date.now()} visible={filesModalVisible} lists={lists} />
+        <FilesTree key={`FilesTree-${Date.now()}`} visible={filesTreeVisible} />
       </GlobalHotKeys>
     );
   }

@@ -1,6 +1,6 @@
 import {
   ADD_ITEM, SAVE_ITEM, CLOSE_ITEM, OPEN_ITEM, NEW_LIST, OPEN_LIST, SAVE_LIST, EXPORT_LIST,
-  UNDO_LIST, REDO_LIST, DELETE_ITEM, SET_CHILDREN_HEIGHT,
+  UNDO_LIST, REDO_LIST, DELETE_ITEM, SET_CHILDREN_HEIGHT, SAVE_FILES, ADD_FILE, DELETE_FILE,
 } from '../constants/action-types';
 
 export function addItem(payload) {
@@ -49,4 +49,16 @@ export function undoList(payload) {
 
 export function redoList(payload) {
   return { type: REDO_LIST, payload };
+}
+
+export function saveFiles(payload) {
+  return { type: SAVE_FILES, payload };
+}
+
+export function addFile(payload) {
+  return { type: ADD_FILE, payload };
+}
+
+export function deleteFile(payload) {
+  return { type: DELETE_FILE, payload };
 }
